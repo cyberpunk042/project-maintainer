@@ -5,10 +5,10 @@ project: "project-maintainer"
 parent_epic: E001-base-toolbelt
 status: in-progress
 priority: high
-readiness: 55
+readiness: 70
 created: "2026-07-03"
 updated: "2026-07-03"
-tags: [audit, clean]
+tags: [audit, clean, fix]
 ---
 
 # M002 — Audit/clean hardening
@@ -27,5 +27,5 @@ Run `pm audit` against every real target; triage the findings; harden the check 
 
 - [x] Audit findings triaged on all 4 registry targets, false positives fixed
 - [x] ≥2 new check classes / precision rules added from real findings (cross-repo, frontmatter exemptions)
+- [x] First `pm fix` fixer implemented — `links` (conservative unique-match link repair) + `clean --diff` byte-level preview
 - [ ] `pm clean --apply` run and verified idempotent on ≥1 sister project (needs operator go-ahead on a target)
-- [ ] First `pm fix` fixer implemented (likely frontmatter or index regen)

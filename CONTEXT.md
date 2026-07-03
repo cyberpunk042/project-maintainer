@@ -17,15 +17,15 @@
 
 ## Maturity snapshot (before we try a real cleanup)
 
-- Working + tested: `registry`, `audit` (8 checks, precision-hardened), `clean` (junk/trailing-ws/profanity), `report`, `migrate` (runner + reference migration), `implant`/`upgrade`/`scaffold` (smoke), `selfcheck`.
-- Tests: 36 (language 11 · audit 9 · guard 7 · migrate 4 · implant 5).
-- Safety proven: dry-run default, dirty-target refusal, writable gating, additive `.proposed`, idempotency.
+- **Every verb is working + tested** — no scaffold-only stubs remain: `registry`, `audit` (8 checks, precision-hardened), `clean` (junk/trailing-ws/profanity, `--diff`), `fix` (links), `report` (`--json`), `migrate` (runner + reference migration), `implant`/`upgrade`/`scaffold` (smoke), `selfcheck`.
+- Tests: 44 (language 11 · audit 9 · guard 7 · migrate 4 · implant 5 · clean 4 · fix 4).
+- Safety proven under test: dry-run default, dirty-target refusal, writable gating, additive `.proposed`, idempotency, byte-level `--diff` review.
 
 ## Next-best moves
 
-1. Implement the first `pm fix` fixer (frontmatter repair or `_index.md` regen) — the last scaffold-only verb (M002/M003).
-2. Finalize + get operator approval on the implant manifest before any `implant --apply` on a brainless sister (M003).
-3. When the operator says a specific target is ready: run the real cleanup (audit → review → `clean --apply`), starting with the safest classes.
+1. Finalize + get operator approval on the implant manifest before any `implant --apply` on a brainless sister (M003).
+2. When the operator says a specific target is ready: run the real cleanup (`audit` → `clean --diff` review → `clean --apply`), starting with the safest classes (junk, trailing-ws), then broken-link `fix`.
+3. Grow audit checks / clean+fix fixers per whatever the first real cleanup surfaces.
 
 ## Operator-pending decisions
 
