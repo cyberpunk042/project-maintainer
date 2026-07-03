@@ -33,6 +33,7 @@ bin/pm audit --target ../sovereign-os
 bin/pm audit --project selfdef --json       # machine-readable findings for triage
 bin/pm report                               # audit everything in projects.yaml
 bin/pm clean --project selfdef --dry-run
+bin/pm clean --project selfdef --diff       # exact byte-level preview before approving
 bin/pm migrate --project selfdef --list     # applied/pending migrations vs a target
 ```
 
