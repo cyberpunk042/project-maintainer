@@ -47,7 +47,7 @@ def main(argv: list[str]) -> int:
                     help="print a unified diff of each content change (review before --apply)")
     args = ap.parse_args(argv)
     target, entry = resolve_target(args.target, args.project)
-    guard(target, entry, args.apply, args.allow_dirty)
+    guard(target, entry, args.apply, args.allow_dirty, getattr(args, 'force_write', False))
     fixers = set(args.fixers.split(","))
     report = ChangeReport(apply=args.apply)
 

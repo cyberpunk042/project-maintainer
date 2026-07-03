@@ -70,7 +70,7 @@ def main(argv: list[str]) -> int:
             print(f"  [{'applied' if mig_id in done else 'pending'}] {mig_id}")
         return 0
 
-    guard(target, entry, args.apply, args.allow_dirty)
+    guard(target, entry, args.apply, args.allow_dirty, getattr(args, 'force_write', False))
     to_run = [args.id] if args.id else [m for m in migrations if m not in done]
     report = ChangeReport(apply=args.apply)
     for mig_id in to_run:

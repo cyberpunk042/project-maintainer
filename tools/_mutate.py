@@ -22,6 +22,9 @@ def add_mutation_args(ap: argparse.ArgumentParser) -> None:
     ap.add_argument("--apply", action="store_true", help="actually write (default: dry-run)")
     ap.add_argument("--allow-dirty", action="store_true",
                     help="proceed even if the target has uncommitted changes (logged)")
+    ap.add_argument("--force-write", action="store_true",
+                    help="explicit operator authorization to write a writable:false "
+                         "target (e.g. the second-brain) for THIS run only (logged)")
 
 
 def git_dirty(target: Path) -> bool:
@@ -35,19 +38,23 @@ def git_dirty(target: Path) -> bool:
         return False  # not a git repo / git unavailable -> dirty-check not applicable
 
 
-def guard(target: Path, entry: Project | None, apply: bool, allow_dirty: bool) -> None:
+def guard(target: Path, entry: Project | None, apply: bool, allow_dirty: bool,
+          force_write: bool = False) -> None:
     """Raise SystemExit if a WRITE is not permitted. Dry-runs (apply=False) never
     write, so they are always allowed — even on read-only targets — so the
     operator can preview what a cleanup WOULD do before authorizing it."""
     if not apply:
         return
     if entry is not None and not entry.writable:
-        raise SystemExit(
-            f"BLOCKED: '{entry.name}' is marked writable: false in projects.yaml. "
-            f"REASON: AGENTS.md Hard Rule 6 (e.g. the second-brain is read-only from here). "
-            f"INSTEAD: run in dry-run (default) to preview, or change the registry "
-            f"entry with operator approval before --apply."
-        )
+        if not force_write:
+            raise SystemExit(
+                f"BLOCKED: '{entry.name}' is marked writable: false in projects.yaml. "
+                f"REASON: AGENTS.md Hard Rule 6 (e.g. the second-brain is read-only from here). "
+                f"INSTEAD: run in dry-run (default) to preview, or pass --force-write "
+                f"(explicit operator authorization, logged) for a one-run exception."
+            )
+        print(f"NOTE: --force-write on writable:false target '{entry.name}' "
+              f"(explicit operator authorization for this run)")
     if git_dirty(target) and not allow_dirty:
         raise SystemExit(
             f"BLOCKED: target {target} has uncommitted changes. "

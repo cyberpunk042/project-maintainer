@@ -165,7 +165,7 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--diff", action="store_true", help="print a unified diff of each change")
     args = ap.parse_args(argv)
     target, entry = resolve_target(args.target, args.project)
-    guard(target, entry, args.apply, args.allow_dirty)
+    guard(target, entry, args.apply, args.allow_dirty, getattr(args, 'force_write', False))
     report = ChangeReport(apply=args.apply)
     for name in args.fixers.split(","):
         fixer = FIXERS.get(name.strip())

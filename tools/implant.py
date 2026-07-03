@@ -39,7 +39,7 @@ def main(argv: list[str]) -> int:
     add_mutation_args(ap)
     args = ap.parse_args(argv)
     target, entry = resolve_target(args.target, args.project)
-    guard(target, entry, args.apply, args.allow_dirty)
+    guard(target, entry, args.apply, args.allow_dirty, getattr(args, 'force_write', False))
     name = entry.name if entry else target.name
     report = ChangeReport(apply=args.apply)
 
