@@ -105,11 +105,34 @@ def _relpath(from_dir: Path, to_file: Path) -> str:
     return os.path.relpath(to_file, from_dir).replace("\\", "/")
 
 
+# Path segments that mark a target as a path-referenced ASSET (template/config)
+# rather than a prose note — those are referenced by location on purpose.
+NON_NOTE_SEGMENTS = {"config", "templates"}
+
+
+def _clean_display(display: str, stem: str) -> str | None:
+    """Return the wikilink alias, or None to emit a bare [[stem]].
+    Strips a trailing .md/.markdown the author put in the display text."""
+    d = display.strip()
+    low = d.lower()
+    if low.endswith(".markdown"):
+        d = d[: -len(".markdown")]
+    elif low.endswith(".md"):
+        d = d[: -len(".md")]
+    return None if not d or d == stem else d
+
+
 def fix_wikilinks(target, entry, report: ChangeReport, show_diff: bool) -> None:
-    """Convert a broken relative markdown link to a moved .md note into an
-    Obsidian wikilink `[[stem|display]]` (dynamic — survives future moves)."""
+    """Convert a broken relative markdown link to a moved .md NOTE into an
+    Obsidian wikilink `[[stem|display]]` (dynamic — survives future moves).
+
+    Conservative: only prose note cross-references. Skips path references
+    (display contains '/'), targets outside the vault note-tree (so we never
+    make a wikilink that can't resolve in Obsidian), and template/config assets
+    (referenced by location on purpose). Strips a stray '.md' from the alias."""
     siblings = _sibling_names()
     stems = _stem_index(target)
+    vault = (target / entry.wiki) if entry and entry.wiki else target
     for root in doc_roots(target, entry):
         for f in iter_files(root):
             if f.suffix.lower() not in (".md", ".markdown"):
@@ -125,8 +148,6 @@ def fix_wikilinks(target, entry, report: ChangeReport, show_diff: bool) -> None:
                 if "://" in tgt or tgt.startswith(("mailto:", "/", "<")):
                     continue
                 if "#" in tgt or "?" in tgt:
-                    # anchor/query-bearing: markdown slug != Obsidian heading;
-                    # don't risk corrupting it — leave for manual review.
                     href = tgt.split("#", 1)[0].split("?", 1)[0]
                     if href and Path(href).suffix.lower() == ".md" and not (f.parent / href).exists():
                         report.skip(rel, f"link '{tgt}' has an anchor/query — not auto-converted")
@@ -138,15 +159,28 @@ def fix_wikilinks(target, entry, report: ChangeReport, show_diff: bool) -> None:
                     continue  # not broken — leave working links alone
                 if siblings & set(Path(href).parts):
                     continue  # cross-repo
+                if "/" in display.strip():
+                    report.skip(rel, f"link '{tgt}' — display is a path, kept as-is (file reference)")
+                    continue
                 stem = Path(href).stem
                 candidates = stems.get(stem, [])
-                if len(candidates) == 1:
-                    wl = f"[[{stem}]]" if display.strip() == stem else f"[[{stem}|{display}]]"
-                    new_text = new_text.replace(m.group(0), wl)
-                    report.act("wikilink", rel, f"{m.group(0)} -> {wl}")
-                else:
+                if len(candidates) != 1:
                     report.skip(rel, f"link '{href}' not convertible "
                                      f"({len(candidates)} note(s) named {stem})")
+                    continue
+                note = candidates[0]
+                try:
+                    note.relative_to(vault)
+                except ValueError:
+                    report.skip(rel, f"link '{href}' — target outside vault ({note.name}), kept as-is")
+                    continue
+                if NON_NOTE_SEGMENTS & set(note.relative_to(target).parts):
+                    report.skip(rel, f"link '{href}' — template/config asset, kept as-is")
+                    continue
+                alias = _clean_display(display, stem)
+                wl = f"[[{stem}]]" if alias is None else f"[[{stem}|{alias}]]"
+                new_text = new_text.replace(m.group(0), wl)
+                report.act("wikilink", rel, f"{m.group(0)} -> {wl}")
             if new_text != text:
                 if show_diff:
                     _print_diff(rel, text, new_text)

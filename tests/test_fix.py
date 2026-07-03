@@ -9,6 +9,8 @@ import unittest
 from pathlib import Path
 
 from tools import fix
+from tools._mutate import ChangeReport
+from tools.registry import Project
 
 
 def _repo(root: Path) -> None:
@@ -133,6 +135,60 @@ class TestFixWikilinks(unittest.TestCase):
             f.write_text("[x](../gone/moved-note.md)\n", encoding="utf-8")
             out = _run(["--target", str(root), "--fixers", "wikilinks"])
             self.assertIn("not convertible", out)
+
+    def test_md_stripped_from_display(self):
+        # display carrying a .md extension must not leak into the alias.
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self._vault(root)
+            f = root / "epics" / "e.md"
+            f.write_text("[moved-note.md](../old/moved-note.md) and [Cool Title.md](../x/moved-note.md)\n",
+                         encoding="utf-8")
+            subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
+            subprocess.run(["git", "-C", str(root), "commit", "-qm", "s"], check=True, capture_output=True)
+            _run(["--target", str(root), "--fixers", "wikilinks", "--apply"])
+            self.assertEqual(f.read_text(), "[[moved-note]] and [[moved-note|Cool Title]]\n")
+
+    def test_path_display_skipped(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self._vault(root)
+            f = root / "epics" / "e.md"
+            original = "[docs/moved-note.md](../old/moved-note.md)\n"
+            f.write_text(original, encoding="utf-8")
+            out = _run(["--target", str(root), "--fixers", "wikilinks"])
+            self.assertIn("display is a path", out)
+            self.assertEqual(f.read_text(), original)
+
+    def test_template_config_asset_skipped(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _repo(root)
+            (root / "epics").mkdir()
+            (root / "config" / "templates").mkdir(parents=True)
+            (root / "config" / "templates" / "decision.md").write_text("t\n", encoding="utf-8")
+            f = root / "epics" / "e.md"
+            original = "[decision.md](../old/decision.md)\n"  # broken; unique note under config/templates
+            f.write_text(original, encoding="utf-8")
+            out = _run(["--target", str(root), "--fixers", "wikilinks"])
+            self.assertIn("template/config asset", out)
+            self.assertEqual(f.read_text(), original)
+
+    def test_target_outside_vault_skipped(self):
+        # linking file under wiki/, target resolves into repo-root docs/ (outside vault)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _repo(root)
+            (root / "wiki" / "spine").mkdir(parents=True)
+            (root / "docs").mkdir()
+            (root / "docs" / "handoff.md").write_text("h\n", encoding="utf-8")
+            f = root / "wiki" / "spine" / "std.md"
+            original = "[handoff](./handoff.md)\n"  # broken here; unique note lives in docs/ (outside vault)
+            f.write_text(original, encoding="utf-8")
+            entry = Project(name="fixture", path=str(root), docs=["wiki"], wiki="wiki")
+            report = ChangeReport(apply=False)
+            fix.fix_wikilinks(root, entry, report, False)
+            self.assertTrue(any("outside vault" in s for s in report.skips))
 
 
 if __name__ == "__main__":
