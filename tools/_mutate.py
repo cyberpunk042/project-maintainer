@@ -36,15 +36,18 @@ def git_dirty(target: Path) -> bool:
 
 
 def guard(target: Path, entry: Project | None, apply: bool, allow_dirty: bool) -> None:
-    """Raise SystemExit if mutation is not permitted. No-op for dry-runs."""
+    """Raise SystemExit if a WRITE is not permitted. Dry-runs (apply=False) never
+    write, so they are always allowed — even on read-only targets — so the
+    operator can preview what a cleanup WOULD do before authorizing it."""
+    if not apply:
+        return
     if entry is not None and not entry.writable:
         raise SystemExit(
             f"BLOCKED: '{entry.name}' is marked writable: false in projects.yaml. "
             f"REASON: AGENTS.md Hard Rule 6 (e.g. the second-brain is read-only from here). "
-            f"INSTEAD: run audit, or change the registry entry with operator approval."
+            f"INSTEAD: run in dry-run (default) to preview, or change the registry "
+            f"entry with operator approval before --apply."
         )
-    if not apply:
-        return
     if git_dirty(target) and not allow_dirty:
         raise SystemExit(
             f"BLOCKED: target {target} has uncommitted changes. "

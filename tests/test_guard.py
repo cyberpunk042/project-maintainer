@@ -26,11 +26,17 @@ def _init_repo(root: Path) -> None:
 
 
 class TestGuard(unittest.TestCase):
-    def test_non_writable_blocks(self):
+    def test_non_writable_blocks_on_apply(self):
         entry = Project(name="second-brain", writable=False)
         with tempfile.TemporaryDirectory() as d:
             with self.assertRaises(SystemExit):
                 guard(Path(d), entry, apply=True, allow_dirty=False)
+
+    def test_non_writable_allows_dry_run(self):
+        # A dry-run writes nothing, so preview must be allowed even read-only.
+        entry = Project(name="second-brain", writable=False)
+        with tempfile.TemporaryDirectory() as d:
+            guard(Path(d), entry, apply=False, allow_dirty=False)  # must not raise
 
     def test_dry_run_never_blocks(self):
         # apply=False must be a no-op even against a dirty repo.
