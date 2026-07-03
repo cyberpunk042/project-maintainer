@@ -4,8 +4,11 @@ Base check classes (M001 scope; extend per-finding in M002):
   junk            .DS_Store, Thumbs.db, *.orig, *.rej, .*.swp, ~ backups
   conflict        unresolved git merge-conflict markers in text files
   empty           zero-byte or whitespace-only markdown files
-  broken-link     relative markdown links pointing at missing files
-  frontmatter     wiki pages (under a declared wiki root) missing YAML frontmatter
+  broken-link     relative markdown links pointing at missing files IN THIS repo
+  cross-repo      relative links into a sibling registry project (informational;
+                  can't be verified from here — NOT counted as broken)
+  frontmatter     wiki pages missing YAML frontmatter (nav files + log dirs +
+                  per-project frontmatter_exempt are excused)
   trailing-ws     trailing whitespace in markdown files (informational)
   slur            targeted-hate / demeaning terms (per-project language policy)
   vulgar          stylistic profanity (per-project language policy)
@@ -26,13 +29,40 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from tools.language import DEFAULT_POLICY, load_config, scan, tiers_for_policy
-from tools.registry import Project, resolve_target
+from tools.registry import Project, load_registry, resolve_target
 
 JUNK_NAMES = {".DS_Store", "Thumbs.db", "desktop.ini"}
 JUNK_SUFFIXES = (".orig", ".rej", ".swp", ".swo", "~")
 SKIP_DIRS = {".git", "node_modules", "target", ".venv", "venv", "__pycache__", "dist", "build", ".pm"}
 CONFLICT_RE = re.compile(r"^(<{7} |={7}$|>{7} )", re.MULTILINE)
 LINK_RE = re.compile(r"\[[^\]]*\]\(([^)#?\s]+)(?:[#?][^)]*)?\)")
+
+# frontmatter check exemptions — navigation/readme files and chronological log
+# entries legitimately carry no frontmatter. Extend per-project via projects.yaml
+# `frontmatter_exempt` (list of path substrings).
+FRONTMATTER_EXEMPT_NAMES = {"_index.md", "index.md", "readme.md"}
+FRONTMATTER_EXEMPT_DIRS = {"log", "logs"}
+
+
+def _sibling_names() -> set[str]:
+    """Directory names of registry projects — used to recognize cross-repo links."""
+    names: set[str] = set()
+    try:
+        for p in load_registry().values():
+            if p.path:
+                names.add(Path(p.path).name)
+    except OSError:
+        pass
+    return names
+
+
+def _frontmatter_exempt(rel: str, name: str, extra: list[str]) -> bool:
+    if name.lower() in FRONTMATTER_EXEMPT_NAMES:
+        return True
+    parts = {p.lower() for p in Path(rel).parts}
+    if parts & FRONTMATTER_EXEMPT_DIRS:
+        return True
+    return any(sub and sub in rel for sub in extra)
 
 
 @dataclass
@@ -61,7 +91,7 @@ def doc_roots(target: Path, entry: Project | None) -> list[Path]:
 
 
 def audit_target(target: Path, entry: Project | None, checks: set[str] | None = None,
-                 policy_override: str | None = None) -> list[Finding]:
+                 policy_override: str | None = None, siblings: set[str] | None = None) -> list[Finding]:
     findings: list[Finding] = []
     wiki_root = (target / entry.wiki) if entry and entry.wiki else None
     enabled = lambda c: checks is None or c in checks  # noqa: E731
@@ -75,6 +105,10 @@ def audit_target(target: Path, entry: Project | None, checks: set[str] | None = 
         lang_cfg = load_config() if lang_tiers else None
     except OSError:
         lang_cfg = None
+    siblings = siblings if siblings is not None else _sibling_names()
+    fm_exempt = list(getattr(entry, "frontmatter_exempt", []) or [])
+    # cross-repo is informational: report only when explicitly requested.
+    cross_repo_on = checks is not None and "cross-repo" in checks
 
     for root in doc_roots(target, entry):
         for f in iter_files(root):
@@ -94,15 +128,22 @@ def audit_target(target: Path, entry: Project | None, checks: set[str] | None = 
                 if enabled("empty") and not text.strip():
                     findings.append(Finding("empty", rel))
                     continue
-                if enabled("broken-link"):
+                if enabled("broken-link") or cross_repo_on:
                     for m in LINK_RE.finditer(text):
                         href = m.group(1)
                         if "://" in href or href.startswith(("mailto:", "/", "<")):
                             continue
-                        if not (f.parent / href).exists():
+                        if (f.parent / href).exists():
+                            continue
+                        # A link into a sibling registry project can't be verified
+                        # from here — classify as cross-repo, not broken.
+                        if siblings & set(Path(href).parts):
+                            if cross_repo_on:
+                                findings.append(Finding("cross-repo", rel, f"-> {href}"))
+                        elif enabled("broken-link"):
                             findings.append(Finding("broken-link", rel, f"-> {href}"))
                 if enabled("frontmatter") and wiki_root and f.is_relative_to(wiki_root):
-                    if not text.startswith("---"):
+                    if not text.startswith("---") and not _frontmatter_exempt(rel, f.name, fm_exempt):
                         findings.append(Finding("frontmatter", rel, "no YAML frontmatter"))
                 if enabled("trailing-ws") and re.search(r"[ \t]+$", text, re.MULTILINE):
                     findings.append(Finding("trailing-ws", rel))

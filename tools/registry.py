@@ -23,6 +23,7 @@ class Project:
     brain: str = "none"
     writable: bool = False
     language_policy: str = "flag-only"
+    frontmatter_exempt: list[str] = field(default_factory=list)
     notes: str = ""
 
     def resolved_path(self) -> Path:
@@ -100,6 +101,7 @@ def load_registry(registry_file: Path = REGISTRY_FILE) -> dict[str, Project]:
             brain=str(fields.get("brain", "none")),
             writable=bool(fields.get("writable", False)),
             language_policy=str(fields.get("language_policy", "flag-only") or "flag-only"),
+            frontmatter_exempt=list(fields.get("frontmatter_exempt", []) or []),
             notes=str(fields.get("notes", "")),
         )
     return result

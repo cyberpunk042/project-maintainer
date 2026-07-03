@@ -1,0 +1,93 @@
+"""Regression tests for audit checks — precision matters before a real cleanup.
+
+Builds throwaway fixture trees in a temp dir (no dependency on sibling repos
+except an explicitly-injected siblings set). Stdlib unittest.
+"""
+from __future__ import annotations
+
+import tempfile
+import unittest
+from pathlib import Path
+
+from tools.audit import _frontmatter_exempt, audit_target
+from tools.registry import Project
+
+
+def _mk(root: Path, rel: str, content: str) -> None:
+    p = root / rel
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(content, encoding="utf-8")
+
+
+def _checks(findings, check):
+    return [f for f in findings if f.check == check]
+
+
+class TestFrontmatterExempt(unittest.TestCase):
+    def test_nav_files_exempt(self):
+        self.assertTrue(_frontmatter_exempt("wiki/_index.md", "_index.md", []))
+        self.assertTrue(_frontmatter_exempt("wiki/README.md", "README.md", []))
+        self.assertTrue(_frontmatter_exempt("wiki/index.md", "index.md", []))
+
+    def test_log_dirs_exempt(self):
+        self.assertTrue(_frontmatter_exempt("wiki/log/2026-05-05-handoff.md", "2026-05-05-handoff.md", []))
+        self.assertTrue(_frontmatter_exempt("wiki/logs/x.md", "x.md", []))
+
+    def test_regular_page_not_exempt(self):
+        self.assertFalse(_frontmatter_exempt("wiki/concepts/foo.md", "foo.md", []))
+
+    def test_configurable_extra(self):
+        self.assertTrue(_frontmatter_exempt("wiki/drafts/x.md", "x.md", ["drafts/"]))
+        self.assertFalse(_frontmatter_exempt("wiki/drafts/x.md", "x.md", ["snapshots/"]))
+
+
+class TestAuditFixture(unittest.TestCase):
+    def _audit(self, root: Path, wiki="wiki", siblings=None, checks=None):
+        entry = Project(name="fixture", path=str(root), docs=["wiki"], wiki=wiki)
+        return audit_target(root, entry, checks=checks, siblings=siblings or set())
+
+    def test_broken_link_flagged(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "wiki/a.md", "---\nt: x\n---\n[b](./missing.md)\n")
+            findings = self._audit(root)
+            self.assertEqual(len(_checks(findings, "broken-link")), 1)
+
+    def test_valid_link_not_flagged(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "wiki/a.md", "---\nt: x\n---\n[b](./b.md)\n")
+            _mk(root, "wiki/b.md", "---\nt: y\n---\nhi\n")
+            self.assertEqual(_checks(self._audit(root), "broken-link"), [])
+
+    def test_cross_repo_not_broken(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "wiki/a.md", "---\nt: x\n---\n[b](../selfdef/backlog/x.md)\n")
+            # broken-link default: cross-repo link must NOT be flagged broken
+            self.assertEqual(_checks(self._audit(root, siblings={"selfdef"}), "broken-link"), [])
+            # opt-in cross-repo check: it IS surfaced separately
+            cr = self._audit(root, siblings={"selfdef"}, checks={"cross-repo"})
+            self.assertEqual(len(_checks(cr, "cross-repo")), 1)
+
+    def test_frontmatter_flagged_and_exempted(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "wiki/concepts/page.md", "no frontmatter here\n")   # flagged
+            _mk(root, "wiki/log/handoff.md", "chronological, no fm\n")     # exempt (log dir)
+            _mk(root, "wiki/_index.md", "nav, no fm\n")                    # exempt (nav)
+            fm = _checks(self._audit(root), "frontmatter")
+            self.assertEqual([f.path for f in fm], ["wiki/concepts/page.md"])
+
+    def test_junk_and_conflict(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "wiki/.DS_Store", "junk")
+            _mk(root, "wiki/c.md", "---\nt: x\n---\n<<<<<<< HEAD\na\n=======\nb\n>>>>>>> other\n")
+            findings = self._audit(root)
+            self.assertEqual(len(_checks(findings, "junk")), 1)
+            self.assertEqual(len(_checks(findings, "conflict")), 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
