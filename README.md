@@ -13,7 +13,7 @@ Operator seed (verbatim): *"it will help us to clean the other project with scri
 |---|---|---|
 | `audit` | Scan a target's wiki/ + docs/: broken links, missing/invalid frontmatter, junk files, conflict markers, empty pages, **slurs / vulgar language** (per-project policy), drift signals. Read-only. | working |
 | `clean` | Apply safe mechanical corrections found by audit (junk removal, trailing whitespace, **policy-gated profanity redaction**). Dry-run by default. | working (junk · trailing-ws · profanity) |
-| `fix` | Targeted corrections beyond mechanical. `links`: repair a broken relative link when exactly one file with that name exists (ambiguous cases reported, never guessed). Dry-run + `--diff`. | working (links; more per need) |
+| `fix` | Targeted corrections. `links`: repair a broken relative link to a uniquely-named file. `wikilinks`: convert a broken relative link to a moved `.md` note into a dynamic Obsidian `[[stem\|display]]` wikilink (move-resilient — the fix for vaults whose files migrate through maturity stages; anchors/ambiguous left alone). Dry-run + `--diff`. | working |
 | `implant` | Implant the second-brain layer into a target (brain files, rules skeleton, wiki/backlog + wiki/log structure) per the adoption guide. Additive; conflicts → `.proposed`. | working (smoke-tested; manifest pre-approval) |
 | `upgrade` | Re-sync an already-implanted target with newer canonical templates (diff-first, additive — never wholesale replace). | working (smoke-tested) |
 | `migrate` | Run versioned, idempotent migrations against a target (moves, renames, frontmatter rewrites) with dry-run + report + applied-state bookkeeping. | working (runner + reference migration) |
