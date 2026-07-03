@@ -7,7 +7,7 @@ priority: high
 readiness: 20
 created: "2026-07-03"
 updated: "2026-07-03"
-modules: [M001-base-scaffold, M002-audit-clean-hardening, M003-implant-upgrade-engine, M004-migration-runner]
+modules: [M001-base-scaffold, M002-audit-clean-hardening, M003-implant-upgrade-engine, M004-migration-runner, M005-language-cleanup]
 tags: [base, toolbelt]
 ---
 
@@ -27,6 +27,7 @@ Operator seed (verbatim): *"it will help us to clean the other project with scri
 | [M002 audit/clean hardening](../modules/M002-audit-clean-hardening.md) | Run against real targets; add checks/fixers per real findings; `fix` fixer classes | next |
 | [M003 implant/upgrade engine](../modules/M003-implant-upgrade-engine.md) | Implant manifest finalization, per-target adaptation pass, upgrade diff UX | after M002 |
 | [M004 migration runner](../modules/M004-migration-runner.md) | First real migrations (per-need, operator-approved), runner hardening | after M002 |
+| [M005 language cleanup](../modules/M005-language-cleanup.md) | Slur/vulgar detection + policy-gated redaction (the name-implied content-cleanup feature) | done |
 
 ## Done When
 

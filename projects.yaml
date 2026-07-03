@@ -10,6 +10,11 @@
 #   wiki:        wiki root if present ("" = none yet)
 #   brain:       brain implantation status: none | partial | implanted
 #   writable:    whether mutating verbs may EVER touch it (audit always allowed)
+#   language_policy: how the language-cleanup feature treats this project:
+#                clean        -> flag slurs+vulgar; profanity fixer may redact
+#                flag-only    -> flag slurs+vulgar; fixer refuses (DEFAULT / unknown)
+#                preserve     -> vulgar is intentional; flag slurs only
+#                preserve-all -> flag nothing (operator-verbatim / intentional corpus)
 #   notes:       free-form
 
 projects:
@@ -21,6 +26,7 @@ projects:
     wiki: ""
     brain: none
     writable: true
+    language_policy: flag-only
     notes: "Rust workspace; docs/ has sdd, handoff, review, standing-directives"
 
   selfdef:
@@ -30,6 +36,7 @@ projects:
     wiki: ""
     brain: none
     writable: true
+    language_policy: flag-only
     notes: "Rust + eBPF; docs/ has sdd, handoff, review, operator"
 
   root-ghostproxy:
@@ -39,7 +46,8 @@ projects:
     wiki: wiki
     brain: implanted
     writable: true
-    notes: "Already carries a full brain + wiki; audit/upgrade territory, not implant"
+    language_policy: preserve
+    notes: "Already carries a full brain + wiki; audit/upgrade territory, not implant. Its brain is packed with operator-verbatim strong language (sacrosanct); preserve vulgar, flag slurs only."
 
   second-brain:
     path: ~/devops-solutions-information-hub
@@ -48,4 +56,5 @@ projects:
     wiki: wiki
     brain: implanted
     writable: false
-    notes: "READ-ONLY from project-maintainer (AGENTS.md Hard Rule 6). Audit allowed; never mutate."
+    language_policy: preserve
+    notes: "READ-ONLY from project-maintainer (AGENTS.md Hard Rule 6). Audit allowed; never mutate. Operator-verbatim corpus is sacrosanct; preserve vulgar, flag slurs only."

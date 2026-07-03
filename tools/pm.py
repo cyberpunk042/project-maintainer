@@ -38,6 +38,31 @@ def selfcheck(argv: list[str]) -> int:
     else:
         print(f"  ok: implant manifest complete ({len(MANIFEST)} template(s))")
     print(f"  ok: migrations dir present ({MIGRATIONS_DIR.exists()})")
+
+    from tools.language import VALID_POLICIES, load_config
+    try:
+        cfg = load_config()
+        print(f"  ok: language config loads ({len(cfg.vulgar)} vulgar, {len(cfg.slur)} slur term(s))")
+    except (OSError, ValueError) as e:
+        print(f"  FAIL: language config: {e}")
+        ok = False
+    bad = [p.name for p in reg.values() if p.language_policy not in VALID_POLICIES]
+    if bad:
+        print(f"  FAIL: invalid language_policy on: {bad}")
+        ok = False
+    else:
+        print("  ok: all registry language_policy values valid")
+
+    import unittest
+
+    suite = unittest.defaultTestLoader.discover(str(REPO_ROOT / "tests"), pattern="test_*.py")
+    result = unittest.TextTestRunner(verbosity=0, stream=open("/dev/null", "w")).run(suite)
+    if result.wasSuccessful():
+        print(f"  ok: unit tests pass ({result.testsRun} test(s))")
+    else:
+        print(f"  FAIL: {len(result.failures)} failure(s), {len(result.errors)} error(s) in unit tests")
+        ok = False
+
     print("SELFCHECK " + ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 

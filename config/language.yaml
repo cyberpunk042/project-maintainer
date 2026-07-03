@@ -1,0 +1,63 @@
+# config/language.yaml — word lists + policy for the language cleanup feature.
+#
+# DATA, not code (Infrastructure > Instructions): tune these lists here, no
+# code change. Two tiers, treated separately by per-project policy:
+#
+#   vulgar : stylistic profanity. Often INTENTIONAL (operator verbatim,
+#            comments venting, sample data). Cleaned only under policy=clean.
+#   slur   : targeted-hate / demeaning terms. Flagged under all policies
+#            except explicit preserve-all; cleaned under policy=clean.
+#
+# Matching: whole-word, case-insensitive, curated variants (NOT substring
+# stemming) to avoid the Scunthorpe problem (false positives inside innocent
+# words). Add explicit variants below rather than relying on prefix expansion.
+#
+# replacement: how the clean fixer rewrites a match when it acts.
+#   redact      -> keep first char, asterisk the rest (fucking -> f******)
+#   placeholder -> replace whole word with `placeholder` string
+#   remove      -> delete the word (collapses the surrounding spaces)
+
+replacement: redact
+placeholder: "[redacted]"
+
+vulgar:
+  - fuck
+  - fucks
+  - fucking
+  - fucked
+  - fucker
+  - fuckers
+  - motherfucker
+  - motherfuckers
+  - motherfucking
+  - shit
+  - shits
+  - shitty
+  - shitshow
+  - bullshit
+  - bitch
+  - bitches
+  - bastard
+  - bastards
+  - asshole
+  - assholes
+  - dumbass
+  - dickhead
+  - prick
+  - cunt
+  - cocksucker
+  - wanker
+  - twat
+  - piss
+  - pissed
+
+slur:
+  - retard
+  - retards
+  - retarded
+  - moron
+  - morons
+  - idiot
+  - idiots
+  - imbecile
+  - cretin

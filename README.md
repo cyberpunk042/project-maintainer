@@ -11,8 +11,8 @@ Operator seed (verbatim): *"it will help us to clean the other project with scri
 
 | Verb | What it does | Status |
 |---|---|---|
-| `audit` | Scan a target's wiki/ + docs/: broken links, missing/invalid frontmatter, junk files, conflict markers, empty pages, drift signals. Read-only. | working (base checks) |
-| `clean` | Apply safe mechanical corrections found by audit (junk removal, whitespace, link fixes). Dry-run by default. | scaffold |
+| `audit` | Scan a target's wiki/ + docs/: broken links, missing/invalid frontmatter, junk files, conflict markers, empty pages, **slurs / vulgar language** (per-project policy), drift signals. Read-only. | working |
+| `clean` | Apply safe mechanical corrections found by audit (junk removal, trailing whitespace, **policy-gated profanity redaction**). Dry-run by default. | working (junk · trailing-ws · profanity) |
 | `fix` | Targeted corrections beyond mechanical (frontmatter repair, index regen). Dry-run by default. | scaffold |
 | `implant` | Implant the second-brain layer into a target (brain files, rules skeleton, wiki/backlog + wiki/log structure, methodology.yaml) per the adoption guide. | scaffold |
 | `upgrade` | Re-sync an already-implanted target with newer canonical templates (diff-first, additive — never wholesale replace). | scaffold |
@@ -34,6 +34,19 @@ bin/pm clean --project selfdef --dry-run
 ```
 
 Python core is invocable directly: `python3 -m tools.pm <verb> ...` (stdlib-only; PyYAML used when present, graceful fallback otherwise).
+
+### Language cleanup (slurs / vulgar language)
+
+`audit` flags — and `clean --fixers profanity` redacts — slurs and vulgar language, driven by data in [`config/language.yaml`](config/language.yaml) (two tiers: `slur`, `vulgar`) and gated **per project** by `language_policy` in [`projects.yaml`](projects.yaml):
+
+| Policy | Audit flags | `clean --fixers profanity` |
+|---|---|---|
+| `clean` | slur + vulgar | redacts both (when invoked + `--apply`) |
+| `flag-only` (default / unknown) | slur + vulgar | **refuses** (surfaces, never auto-cleans) |
+| `preserve` | slur only (vulgar is intentional) | refuses |
+| `preserve-all` | nothing (operator-verbatim corpus) | refuses |
+
+Design intent (operator directive 2026-07-03): clean *"when and if appropriate"*, *"consider that some sister project be treated differently"*. So: dry-run default, profanity **never** in the default `clean` set, unknown targets flagged-not-assumed, and projects whose strong language is intentional operator-verbatim (root-ghostproxy, second-brain — sacrosanct) set to `preserve`. A one-off `--language-policy <policy>` overrides the registry for a single run (explicit operator authorization). Matching is whole-word, case-insensitive, curated-variant (no substring stemming → no Scunthorpe false positives).
 
 ## Layout
 

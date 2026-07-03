@@ -7,6 +7,13 @@ Base check classes (M001 scope; extend per-finding in M002):
   broken-link     relative markdown links pointing at missing files
   frontmatter     wiki pages (under a declared wiki root) missing YAML frontmatter
   trailing-ws     trailing whitespace in markdown files (informational)
+  slur            targeted-hate / demeaning terms (per-project language policy)
+  vulgar          stylistic profanity (per-project language policy)
+
+Language checks (slur/vulgar) are gated by the target's `language_policy`
+(projects.yaml): preserve suppresses vulgar, preserve-all suppresses both,
+flag-only/clean flag both. Unknown targets default to flag-only (don't assume
+intent). Override for one run with --language-policy.
 
 Read-only by design: audit NEVER writes to the target.
 """
@@ -18,6 +25,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+from tools.language import DEFAULT_POLICY, load_config, scan, tiers_for_policy
 from tools.registry import Project, resolve_target
 
 JUNK_NAMES = {".DS_Store", "Thumbs.db", "desktop.ini"}
@@ -52,10 +60,21 @@ def doc_roots(target: Path, entry: Project | None) -> list[Path]:
     return roots or [target]
 
 
-def audit_target(target: Path, entry: Project | None, checks: set[str] | None = None) -> list[Finding]:
+def audit_target(target: Path, entry: Project | None, checks: set[str] | None = None,
+                 policy_override: str | None = None) -> list[Finding]:
     findings: list[Finding] = []
     wiki_root = (target / entry.wiki) if entry and entry.wiki else None
     enabled = lambda c: checks is None or c in checks  # noqa: E731
+
+    # Language checks are gated by the target's per-project policy (projects.yaml
+    # language_policy). Unknown/undeclared target -> flag-only (don't assume intent).
+    # An explicit --language-policy override is operator authorization for this run.
+    policy = policy_override or (entry.language_policy if entry else DEFAULT_POLICY)
+    lang_tiers = tiers_for_policy(policy, action="flag")
+    try:
+        lang_cfg = load_config() if lang_tiers else None
+    except OSError:
+        lang_cfg = None
 
     for root in doc_roots(target, entry):
         for f in iter_files(root):
@@ -87,6 +106,15 @@ def audit_target(target: Path, entry: Project | None, checks: set[str] | None = 
                         findings.append(Finding("frontmatter", rel, "no YAML frontmatter"))
                 if enabled("trailing-ws") and re.search(r"[ \t]+$", text, re.MULTILINE):
                     findings.append(Finding("trailing-ws", rel))
+                if lang_cfg and f.name != "language.yaml":
+                    for tier in ("slur", "vulgar"):
+                        if tier in lang_tiers and enabled(tier):
+                            hits = scan(text, lang_cfg, {tier})
+                            if hits:
+                                sample = sorted({m.word.lower() for m in hits})[:5]
+                                findings.append(Finding(
+                                    tier, rel,
+                                    f"{len(hits)}x [{', '.join(sample)}] (policy={policy})"))
     return findings
 
 
@@ -108,10 +136,13 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--target", help="path to a project checkout")
     ap.add_argument("--project", help="registry name from projects.yaml")
     ap.add_argument("--checks", help="comma-separated subset of checks to run")
+    ap.add_argument("--language-policy", dest="language_policy",
+                    help="override the registry language_policy for this run "
+                         "(clean|flag-only|preserve|preserve-all)")
     args = ap.parse_args(argv)
     target, entry = resolve_target(args.target, args.project)
     checks = set(args.checks.split(",")) if args.checks else None
-    findings = audit_target(target, entry, checks)
+    findings = audit_target(target, entry, checks, policy_override=args.language_policy)
     print_report(target, findings)
     return 1 if findings else 0
 

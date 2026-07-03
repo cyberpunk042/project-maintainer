@@ -4,26 +4,27 @@
 
 ## Current phase
 
-**Scaffold** (SFIF: Scaffold). Base landed 2026-07-03: brain files, wiki structure, registry, tool skeleton with working `registry`/`audit`/`report`, templates, migration conventions.
+**Scaffold** (SFIF: Scaffold), on `main` (operator directive: use main). Base landed 2026-07-03 (M001); language-cleanup feature landed same day (M005).
 
 ## Active epic
 
 - **E001 — Base toolbelt** ([wiki/backlog/epics/E001-base-toolbelt.md](wiki/backlog/epics/E001-base-toolbelt.md))
-  - M001 base scaffold (this landing) — done at scaffold stage
+  - M001 base scaffold — done (scaffold stage)
   - M002 audit/clean hardening — next
   - M003 implant/upgrade engine — after M002
   - M004 migration runner — after M002
+  - M005 language cleanup (slurs/vulgar) — done (working: audit flags + policy-gated `clean --fixers profanity` + 11 tests)
 
 ## Next-best moves
 
-1. Run `bin/pm audit` against a real sister project (sovereign-os or selfdef), review findings, harden checks (M002).
-2. Implement `clean --apply` for the safest check classes (junk files, trailing whitespace, conflict markers).
-3. Design the implant manifest (which template files land where, per adoption guide) before implementing `implant --apply` (M003).
+1. Triage the ~540 `bin/pm report` findings across the four targets; harden audit checks and grow `clean`/`fix` fixers per real recurring findings (M002).
+2. Design the implant manifest (which template files land where, per adoption guide) before `implant --apply` (M003).
+3. When the operator calls it "appropriate" for a specific target: run the language cleanup end-to-end on a sister project (set `language_policy: clean` or use `--language-policy clean`, dry-run → review → apply).
 
 ## Operator-pending decisions
 
-- None currently. (Scope questions answered 2026-07-03 — see [wiki/log/2026-07-03-operator-init-directive.md](wiki/log/2026-07-03-operator-init-directive.md).)
+- Per-target language cleanup is opt-in by design — each "clean the language in X" is an operator "when appropriate" call. No standing decision pending.
 
 ## Registry snapshot
 
-Targets declared in [projects.yaml](projects.yaml): sovereign-os, selfdef, root-ghostproxy, devops-solutions-information-hub (audit-only — Hard Rule: never written from here).
+Targets in [projects.yaml](projects.yaml): sovereign-os (`flag-only`), selfdef (`flag-only`), root-ghostproxy (`preserve` — sacrosanct verbatim), second-brain (`preserve`, READ-ONLY — never written from here).

@@ -42,6 +42,7 @@ Full log: [wiki/log/](wiki/log/) (verbatim, sacrosanct). Log new directives ther
 |---|---|
 | "audit X" / "check X" / "how dirty is X" | `bin/pm audit --target <path>` (or `--project <name>`) |
 | "clean X" / "corrections" | `bin/pm audit` first, then `bin/pm clean --dry-run`, show, then `--apply` on approval |
+| "clean up the language / slurs / vulgar words in X" | `bin/pm audit --project X --checks slur,vulgar` to flag, then `bin/pm clean --project X --fixers profanity` — policy-gated (`language_policy` in projects.yaml); dry-run, show, `--apply` on approval. See [.claude/rules/content-policy.md](.claude/rules/content-policy.md). |
 | "implant the brain into X" / "wiki-hub implantation" | `bin/pm implant --project <name> --dry-run` |
 | "upgrade X's brain" | `bin/pm upgrade --project <name> --dry-run` |
 | "migrate X" / restructure docs/wiki | `bin/pm migrate --project <name> --list` then run specific migration |
@@ -63,6 +64,7 @@ Stage-gate methodology adopted from the second-brain (adoption guide): engine at
 | Solo-session pattern + PO approval boundary | [.claude/rules/work-mode.md](.claude/rules/work-mode.md) |
 | Intent → verb routing detail + verb contracts | [.claude/rules/routing.md](.claude/rules/routing.md) |
 | What this project IS vs the second-brain | [.claude/rules/self-reference.md](.claude/rules/self-reference.md) |
+| Language cleanup policy + sacrosanct-verbatim tension | [.claude/rules/content-policy.md](.claude/rules/content-policy.md) |
 | Target registry | [projects.yaml](projects.yaml) |
 | Templates stamped into targets | [templates/](templates/) |
 | Migration conventions | [migrations/README.md](migrations/README.md) |

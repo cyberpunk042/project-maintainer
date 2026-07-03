@@ -6,3 +6,4 @@
 | [M002 — Audit/clean hardening](M002-audit-clean-hardening.md) | E001 | draft | 0% |
 | [M003 — Implant/upgrade engine](M003-implant-upgrade-engine.md) | E001 | draft | 0% |
 | [M004 — Migration runner](M004-migration-runner.md) | E001 | draft | 0% |
+| [M005 — Language cleanup (slurs / vulgar)](M005-language-cleanup.md) | E001 | done | 85% |

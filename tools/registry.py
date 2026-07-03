@@ -22,6 +22,7 @@ class Project:
     wiki: str = ""
     brain: str = "none"
     writable: bool = False
+    language_policy: str = "flag-only"
     notes: str = ""
 
     def resolved_path(self) -> Path:
@@ -98,6 +99,7 @@ def load_registry(registry_file: Path = REGISTRY_FILE) -> dict[str, Project]:
             wiki=str(fields.get("wiki", "") or ""),
             brain=str(fields.get("brain", "none")),
             writable=bool(fields.get("writable", False)),
+            language_policy=str(fields.get("language_policy", "flag-only") or "flag-only"),
             notes=str(fields.get("notes", "")),
         )
     return result
@@ -141,7 +143,8 @@ def main(argv: list[str]) -> int:
         for p in reg.values():
             local = "local" if p.exists_locally() else "NOT CLONED"
             rw = "writable" if p.writable else "READ-ONLY"
-            print(f"  {p.name:<28} {p.path:<38} brain={p.brain:<10} {rw:<10} [{local}]")
+            print(f"  {p.name:<28} {p.path:<38} brain={p.brain:<10} {rw:<10} "
+                  f"lang={p.language_policy:<12} [{local}]")
             if p.notes:
                 print(f"  {'':<28} {p.notes}")
         return 0
