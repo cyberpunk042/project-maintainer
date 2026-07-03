@@ -174,6 +174,30 @@ class TestFixWikilinks(unittest.TestCase):
             self.assertIn("template/config asset", out)
             self.assertEqual(f.read_text(), original)
 
+    def test_table_cell_pipe_escaped(self):
+        # a wikilink alias inside a table cell must escape its pipe (\|) so the
+        # table doesn't break on GitHub.
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self._vault(root)
+            f = root / "epics" / "e.md"
+            f.write_text("| col | [Nice Lesson](../old/moved-note.md) | end |\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
+            subprocess.run(["git", "-C", str(root), "commit", "-qm", "s"], check=True, capture_output=True)
+            _run(["--target", str(root), "--fixers", "wikilinks", "--apply"])
+            self.assertEqual(f.read_text(), "| col | [[moved-note\\|Nice Lesson]] | end |\n")
+
+    def test_prose_pipe_not_escaped(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self._vault(root)
+            f = root / "epics" / "e.md"
+            f.write_text("see [Nice Lesson](../old/moved-note.md) here\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
+            subprocess.run(["git", "-C", str(root), "commit", "-qm", "s"], check=True, capture_output=True)
+            _run(["--target", str(root), "--fixers", "wikilinks", "--apply"])
+            self.assertEqual(f.read_text(), "see [[moved-note|Nice Lesson]] here\n")
+
     def test_target_outside_vault_skipped(self):
         # linking file under wiki/, target resolves into repo-root docs/ (outside vault)
         with tempfile.TemporaryDirectory() as d:

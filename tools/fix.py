@@ -142,45 +142,56 @@ def fix_wikilinks(target, entry, report: ChangeReport, show_diff: bool) -> None:
             except (UnicodeDecodeError, OSError):
                 continue
             rel = f.relative_to(target)
-            new_text = text
-            for m in MD_LINK_RE.finditer(text):
-                display, tgt = m.group(1), m.group(2)
-                if "://" in tgt or tgt.startswith(("mailto:", "/", "<")):
-                    continue
-                if "#" in tgt or "?" in tgt:
-                    href = tgt.split("#", 1)[0].split("?", 1)[0]
-                    if href and Path(href).suffix.lower() == ".md" and not (f.parent / href).exists():
-                        report.skip(rel, f"link '{tgt}' has an anchor/query — not auto-converted")
-                    continue
-                href = tgt
-                if Path(href).suffix.lower() != ".md":
-                    continue  # only note links become wikilinks
-                if (f.parent / href).exists():
-                    continue  # not broken — leave working links alone
-                if siblings & set(Path(href).parts):
-                    continue  # cross-repo
-                if "/" in display.strip():
-                    report.skip(rel, f"link '{tgt}' — display is a path, kept as-is (file reference)")
-                    continue
-                stem = Path(href).stem
-                candidates = stems.get(stem, [])
-                if len(candidates) != 1:
-                    report.skip(rel, f"link '{href}' not convertible "
-                                     f"({len(candidates)} note(s) named {stem})")
-                    continue
-                note = candidates[0]
-                try:
-                    note.relative_to(vault)
-                except ValueError:
-                    report.skip(rel, f"link '{href}' — target outside vault ({note.name}), kept as-is")
-                    continue
-                if NON_NOTE_SEGMENTS & set(note.relative_to(target).parts):
-                    report.skip(rel, f"link '{href}' — template/config asset, kept as-is")
-                    continue
-                alias = _clean_display(display, stem)
-                wl = f"[[{stem}]]" if alias is None else f"[[{stem}|{alias}]]"
-                new_text = new_text.replace(m.group(0), wl)
-                report.act("wikilink", rel, f"{m.group(0)} -> {wl}")
+            out_lines: list[str] = []
+            for line in text.splitlines(keepends=True):
+                # A wikilink alias uses '|'; inside a markdown table that '|' is a
+                # column separator and breaks the table on GitHub. Escape it there.
+                body = line.lstrip()
+                if body.startswith(">"):
+                    body = body[1:].lstrip()
+                in_table = body.startswith("|")
+                new_line = line
+                for m in MD_LINK_RE.finditer(line):
+                    display, tgt = m.group(1), m.group(2)
+                    if "://" in tgt or tgt.startswith(("mailto:", "/", "<")):
+                        continue
+                    if "#" in tgt or "?" in tgt:
+                        href = tgt.split("#", 1)[0].split("?", 1)[0]
+                        if href and Path(href).suffix.lower() == ".md" and not (f.parent / href).exists():
+                            report.skip(rel, f"link '{tgt}' has an anchor/query — not auto-converted")
+                        continue
+                    href = tgt
+                    if Path(href).suffix.lower() != ".md":
+                        continue  # only note links become wikilinks
+                    if (f.parent / href).exists():
+                        continue  # not broken — leave working links alone
+                    if siblings & set(Path(href).parts):
+                        continue  # cross-repo
+                    if "/" in display.strip():
+                        report.skip(rel, f"link '{tgt}' — display is a path, kept as-is (file reference)")
+                        continue
+                    stem = Path(href).stem
+                    candidates = stems.get(stem, [])
+                    if len(candidates) != 1:
+                        report.skip(rel, f"link '{href}' not convertible "
+                                         f"({len(candidates)} note(s) named {stem})")
+                        continue
+                    note = candidates[0]
+                    try:
+                        note.relative_to(vault)
+                    except ValueError:
+                        report.skip(rel, f"link '{href}' — target outside vault ({note.name}), kept as-is")
+                        continue
+                    if NON_NOTE_SEGMENTS & set(note.relative_to(target).parts):
+                        report.skip(rel, f"link '{href}' — template/config asset, kept as-is")
+                        continue
+                    alias = _clean_display(display, stem)
+                    sep = "\\|" if in_table else "|"
+                    wl = f"[[{stem}]]" if alias is None else f"[[{stem}{sep}{alias}]]"
+                    new_line = new_line.replace(m.group(0), wl)
+                    report.act("wikilink", rel, f"{m.group(0)} -> {wl}")
+                out_lines.append(new_line)
+            new_text = "".join(out_lines)
             if new_text != text:
                 if show_diff:
                     _print_diff(rel, text, new_text)
