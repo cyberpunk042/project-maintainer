@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# pm — project-maintainer entrypoint (bash wrapper over the Python core).
+# Usage: bin/pm <verb> [args...]        (bin/pm help for the verb list)
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# Prefer a repo venv when present; fall back to system python3.
+if [[ -x "$REPO_ROOT/.venv/bin/python" ]]; then
+  PYTHON="$REPO_ROOT/.venv/bin/python"
+else
+  PYTHON="$(command -v python3)"
+fi
+
+cd "$REPO_ROOT"
+exec "$PYTHON" -m tools.pm "$@"

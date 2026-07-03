@@ -1,0 +1,51 @@
+# projects.yaml — target-project registry for project-maintainer
+#
+# Pattern borrowed from the second-brain's sister-projects.yaml:
+# `~/` home-expansion paths (portable across machines) + remote fallback.
+#
+# Fields per project:
+#   path:        local checkout (~/ expanded at runtime)
+#   remote:      git remote (fallback / provenance)
+#   docs:        list of documentation roots to audit/clean
+#   wiki:        wiki root if present ("" = none yet)
+#   brain:       brain implantation status: none | partial | implanted
+#   writable:    whether mutating verbs may EVER touch it (audit always allowed)
+#   notes:       free-form
+
+projects:
+
+  sovereign-os:
+    path: ~/sovereign-os
+    remote: https://github.com/cyberpunk042/sovereign-os
+    docs: [docs, backlog]
+    wiki: ""
+    brain: none
+    writable: true
+    notes: "Rust workspace; docs/ has sdd, handoff, review, standing-directives"
+
+  selfdef:
+    path: ~/selfdef
+    remote: https://github.com/cyberpunk042/selfdef
+    docs: [docs, backlog, rules]
+    wiki: ""
+    brain: none
+    writable: true
+    notes: "Rust + eBPF; docs/ has sdd, handoff, review, operator"
+
+  root-ghostproxy:
+    path: ~/root-ghostproxy
+    remote: https://github.com/cyberpunk042/root-ghostproxy
+    docs: [wiki]
+    wiki: wiki
+    brain: implanted
+    writable: true
+    notes: "Already carries a full brain + wiki; audit/upgrade territory, not implant"
+
+  second-brain:
+    path: ~/devops-solutions-information-hub
+    remote: https://github.com/cyberpunk042/devops-solutions-information-hub
+    docs: [wiki]
+    wiki: wiki
+    brain: implanted
+    writable: false
+    notes: "READ-ONLY from project-maintainer (AGENTS.md Hard Rule 6). Audit allowed; never mutate."
