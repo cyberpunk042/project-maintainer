@@ -4,22 +4,28 @@
 
 ## Current phase
 
-**Scaffold** (SFIF: Scaffold), on `main` (operator directive: use main). Base landed 2026-07-03 (M001); language-cleanup feature landed same day (M005).
+**Scaffold → implement** on `main` (operator directive: use main). Toolbelt maturing before any real cleanup on a sister repo (operator goal). 36 unit tests green via `bin/pm selfcheck`.
 
 ## Active epic
 
 - **E001 — Base toolbelt** ([wiki/backlog/epics/E001-base-toolbelt.md](wiki/backlog/epics/E001-base-toolbelt.md))
-  - M001 base scaffold — done (scaffold stage)
-  - M002 audit/clean hardening — next
-  - M003 implant/upgrade engine — after M002
-  - M004 migration runner — after M002
-  - M005 language cleanup (slurs/vulgar) — done (working: audit flags + policy-gated `clean --fixers profanity` + 11 tests)
+  - M001 base scaffold — done
+  - M002 audit/clean hardening — in-progress (false-positive classes fixed, `--json`, 9 tests)
+  - M003 implant/upgrade engine — draft (smoke-tested; manifest pre-approval pending)
+  - M004 migration runner — in-progress (runner proven + reference migration + tests)
+  - M005 language cleanup (slurs/vulgar) — done
+
+## Maturity snapshot (before we try a real cleanup)
+
+- Working + tested: `registry`, `audit` (8 checks, precision-hardened), `clean` (junk/trailing-ws/profanity), `report`, `migrate` (runner + reference migration), `implant`/`upgrade`/`scaffold` (smoke), `selfcheck`.
+- Tests: 36 (language 11 · audit 9 · guard 7 · migrate 4 · implant 5).
+- Safety proven: dry-run default, dirty-target refusal, writable gating, additive `.proposed`, idempotency.
 
 ## Next-best moves
 
-1. Triage the ~540 `bin/pm report` findings across the four targets; harden audit checks and grow `clean`/`fix` fixers per real recurring findings (M002).
-2. Design the implant manifest (which template files land where, per adoption guide) before `implant --apply` (M003).
-3. When the operator calls it "appropriate" for a specific target: run the language cleanup end-to-end on a sister project (set `language_policy: clean` or use `--language-policy clean`, dry-run → review → apply).
+1. Implement the first `pm fix` fixer (frontmatter repair or `_index.md` regen) — the last scaffold-only verb (M002/M003).
+2. Finalize + get operator approval on the implant manifest before any `implant --apply` on a brainless sister (M003).
+3. When the operator says a specific target is ready: run the real cleanup (audit → review → `clean --apply`), starting with the safest classes.
 
 ## Operator-pending decisions
 

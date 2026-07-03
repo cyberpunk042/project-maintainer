@@ -159,17 +159,31 @@ def audit_target(target: Path, entry: Project | None, checks: set[str] | None = 
     return findings
 
 
+def counts(findings: list[Finding]) -> dict[str, int]:
+    by_check: dict[str, int] = {}
+    for fi in findings:
+        by_check[fi.check] = by_check.get(fi.check, 0) + 1
+    return by_check
+
+
 def print_report(target: Path, findings: list[Finding]) -> None:
     print(f"AUDIT {target}")
     if not findings:
         print("  clean — 0 findings")
         return
-    by_check: dict[str, int] = {}
     for fi in findings:
-        by_check[fi.check] = by_check.get(fi.check, 0) + 1
         print(fi.line())
-    summary = ", ".join(f"{k}={v}" for k, v in sorted(by_check.items()))
+    summary = ", ".join(f"{k}={v}" for k, v in sorted(counts(findings).items()))
     print(f"  TOTAL {len(findings)} finding(s): {summary}")
+
+
+def as_dict(target: Path, findings: list[Finding]) -> dict:
+    return {
+        "target": str(target),
+        "total": len(findings),
+        "counts": counts(findings),
+        "findings": [{"check": f.check, "path": f.path, "detail": f.detail} for f in findings],
+    }
 
 
 def main(argv: list[str]) -> int:
@@ -180,11 +194,17 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--language-policy", dest="language_policy",
                     help="override the registry language_policy for this run "
                          "(clean|flag-only|preserve|preserve-all)")
+    ap.add_argument("--json", action="store_true", help="emit findings as JSON")
     args = ap.parse_args(argv)
     target, entry = resolve_target(args.target, args.project)
     checks = set(args.checks.split(",")) if args.checks else None
     findings = audit_target(target, entry, checks, policy_override=args.language_policy)
-    print_report(target, findings)
+    if args.json:
+        import json
+
+        print(json.dumps(as_dict(target, findings), indent=2))
+    else:
+        print_report(target, findings)
     return 1 if findings else 0
 
 

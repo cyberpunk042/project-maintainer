@@ -14,12 +14,13 @@ Operator seed (verbatim): *"it will help us to clean the other project with scri
 | `audit` | Scan a target's wiki/ + docs/: broken links, missing/invalid frontmatter, junk files, conflict markers, empty pages, **slurs / vulgar language** (per-project policy), drift signals. Read-only. | working |
 | `clean` | Apply safe mechanical corrections found by audit (junk removal, trailing whitespace, **policy-gated profanity redaction**). Dry-run by default. | working (junk · trailing-ws · profanity) |
 | `fix` | Targeted corrections beyond mechanical (frontmatter repair, index regen). Dry-run by default. | scaffold |
-| `implant` | Implant the second-brain layer into a target (brain files, rules skeleton, wiki/backlog + wiki/log structure, methodology.yaml) per the adoption guide. | scaffold |
-| `upgrade` | Re-sync an already-implanted target with newer canonical templates (diff-first, additive — never wholesale replace). | scaffold |
-| `migrate` | Run versioned, idempotent migrations against a target (moves, renames, frontmatter rewrites) with dry-run + report. | scaffold |
-| `scaffold` | Stamp templates (pages, backlog items, brain pieces) into a target. | scaffold |
-| `report` | Run audit across all registry projects; emit a consolidated health report. | working (wraps audit) |
+| `implant` | Implant the second-brain layer into a target (brain files, rules skeleton, wiki/backlog + wiki/log structure) per the adoption guide. Additive; conflicts → `.proposed`. | working (smoke-tested; manifest pre-approval) |
+| `upgrade` | Re-sync an already-implanted target with newer canonical templates (diff-first, additive — never wholesale replace). | working (smoke-tested) |
+| `migrate` | Run versioned, idempotent migrations against a target (moves, renames, frontmatter rewrites) with dry-run + report + applied-state bookkeeping. | working (runner + reference migration) |
+| `scaffold` | Stamp a single template (page, backlog item) into a target. | working |
+| `report` | Run audit across all registry projects; consolidated health report (`--json` for triage). | working |
 | `registry` | List/inspect the target-project registry (`projects.yaml`). | working |
+| `selfcheck` | Sanity-check this repo (imports, registry, manifest, language config, unit tests). | working |
 
 ## Usage
 
@@ -29,9 +30,13 @@ bin/pm <verb> [--target <path> | --project <registry-name>] [options]
 # examples
 bin/pm registry list
 bin/pm audit --target ../sovereign-os
-bin/pm report                      # audit everything in projects.yaml
+bin/pm audit --project selfdef --json       # machine-readable findings for triage
+bin/pm report                               # audit everything in projects.yaml
 bin/pm clean --project selfdef --dry-run
+bin/pm migrate --project selfdef --list     # applied/pending migrations vs a target
 ```
+
+Every mutating verb (`clean`, `fix`, `implant`, `upgrade`, `migrate`, `scaffold`) defaults to **dry-run**, requires `--apply` to write, refuses a dirty target (uncommitted changes) without `--allow-dirty`, and is idempotent. Run `bin/pm selfcheck` to verify the toolbelt itself (currently 36 unit tests).
 
 Python core is invocable directly: `python3 -m tools.pm <verb> ...` (stdlib-only; PyYAML used when present, graceful fallback otherwise).
 
