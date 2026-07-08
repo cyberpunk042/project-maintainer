@@ -23,7 +23,7 @@ import re
 import sys
 from pathlib import Path
 
-from tools.audit import LINK_RE, SKIP_DIRS, doc_roots, iter_files
+from tools.audit import LINK_RE, SKIP_DIRS, iter_doc_files
 from tools._mutate import ChangeReport, add_mutation_args, guard
 from tools.registry import load_registry, resolve_target
 
@@ -66,37 +66,36 @@ def _print_diff(rel, before: str, after: str) -> None:
 def fix_links(target, entry, report: ChangeReport, show_diff: bool) -> None:
     siblings = _sibling_names()
     index = _basename_index(target)
-    for root in doc_roots(target, entry):
-        for f in iter_files(root):
-            if f.suffix.lower() not in (".md", ".markdown"):
+    for f in iter_doc_files(target, entry):
+        if f.suffix.lower() not in (".md", ".markdown"):
+            continue
+        try:
+            text = f.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        rel = f.relative_to(target)
+        new_text = text
+        for m in LINK_RE.finditer(text):
+            href = m.group(1)
+            if "://" in href or href.startswith(("mailto:", "/", "<")):
                 continue
-            try:
-                text = f.read_text(encoding="utf-8")
-            except (UnicodeDecodeError, OSError):
+            if (f.parent / href).exists():
                 continue
-            rel = f.relative_to(target)
-            new_text = text
-            for m in LINK_RE.finditer(text):
-                href = m.group(1)
-                if "://" in href or href.startswith(("mailto:", "/", "<")):
-                    continue
-                if (f.parent / href).exists():
-                    continue
-                if siblings & set(Path(href).parts):
-                    continue  # cross-repo — leave alone
-                candidates = index.get(Path(href).name, [])
-                if len(candidates) == 1:
-                    new_href = _relpath(f.parent, candidates[0])
-                    new_text = new_text.replace(f"]({href})", f"]({new_href})")
-                    report.act("fix link", rel, f"{href} -> {new_href}")
-                else:
-                    report.skip(rel, f"link '{href}' not auto-fixable "
-                                     f"({len(candidates)} candidate(s) named {Path(href).name})")
-            if new_text != text:
-                if show_diff:
-                    _print_diff(rel, text, new_text)
-                if report.apply:
-                    f.write_text(new_text, encoding="utf-8")
+            if siblings & set(Path(href).parts):
+                continue  # cross-repo — leave alone
+            candidates = index.get(Path(href).name, [])
+            if len(candidates) == 1:
+                new_href = _relpath(f.parent, candidates[0])
+                new_text = new_text.replace(f"]({href})", f"]({new_href})")
+                report.act("fix link", rel, f"{href} -> {new_href}")
+            else:
+                report.skip(rel, f"link '{href}' not auto-fixable "
+                                 f"({len(candidates)} candidate(s) named {Path(href).name})")
+        if new_text != text:
+            if show_diff:
+                _print_diff(rel, text, new_text)
+            if report.apply:
+                f.write_text(new_text, encoding="utf-8")
 
 
 def _relpath(from_dir: Path, to_file: Path) -> str:
@@ -133,70 +132,69 @@ def fix_wikilinks(target, entry, report: ChangeReport, show_diff: bool) -> None:
     siblings = _sibling_names()
     stems = _stem_index(target)
     vault = (target / entry.wiki) if entry and entry.wiki else target
-    for root in doc_roots(target, entry):
-        for f in iter_files(root):
-            if f.suffix.lower() not in (".md", ".markdown"):
-                continue
-            try:
-                text = f.read_text(encoding="utf-8")
-            except (UnicodeDecodeError, OSError):
-                continue
-            rel = f.relative_to(target)
-            out_lines: list[str] = []
-            for line in text.splitlines(keepends=True):
-                # A wikilink alias uses '|'; inside a markdown table that '|' is a
-                # column separator and breaks the table on GitHub. Escape it there.
-                body = line.lstrip()
-                if body.startswith(">"):
-                    body = body[1:].lstrip()
-                in_table = body.startswith("|")
-                new_line = line
-                for m in MD_LINK_RE.finditer(line):
-                    display, tgt = m.group(1), m.group(2)
-                    if "://" in tgt or tgt.startswith(("mailto:", "/", "<")):
-                        continue
-                    if "#" in tgt or "?" in tgt:
-                        href = tgt.split("#", 1)[0].split("?", 1)[0]
-                        if href and Path(href).suffix.lower() == ".md" and not (f.parent / href).exists():
-                            report.skip(rel, f"link '{tgt}' has an anchor/query — not auto-converted")
-                        continue
-                    href = tgt
-                    if Path(href).suffix.lower() != ".md":
-                        continue  # only note links become wikilinks
-                    if (f.parent / href).exists():
-                        continue  # not broken — leave working links alone
-                    if siblings & set(Path(href).parts):
-                        continue  # cross-repo
-                    if "/" in display.strip():
-                        report.skip(rel, f"link '{tgt}' — display is a path, kept as-is (file reference)")
-                        continue
-                    stem = Path(href).stem
-                    candidates = stems.get(stem, [])
-                    if len(candidates) != 1:
-                        report.skip(rel, f"link '{href}' not convertible "
-                                         f"({len(candidates)} note(s) named {stem})")
-                        continue
-                    note = candidates[0]
-                    try:
-                        note.relative_to(vault)
-                    except ValueError:
-                        report.skip(rel, f"link '{href}' — target outside vault ({note.name}), kept as-is")
-                        continue
-                    if NON_NOTE_SEGMENTS & set(note.relative_to(target).parts):
-                        report.skip(rel, f"link '{href}' — template/config asset, kept as-is")
-                        continue
-                    alias = _clean_display(display, stem)
-                    sep = "\\|" if in_table else "|"
-                    wl = f"[[{stem}]]" if alias is None else f"[[{stem}{sep}{alias}]]"
-                    new_line = new_line.replace(m.group(0), wl)
-                    report.act("wikilink", rel, f"{m.group(0)} -> {wl}")
-                out_lines.append(new_line)
-            new_text = "".join(out_lines)
-            if new_text != text:
-                if show_diff:
-                    _print_diff(rel, text, new_text)
-                if report.apply:
-                    f.write_text(new_text, encoding="utf-8")
+    for f in iter_doc_files(target, entry):
+        if f.suffix.lower() not in (".md", ".markdown"):
+            continue
+        try:
+            text = f.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        rel = f.relative_to(target)
+        out_lines: list[str] = []
+        for line in text.splitlines(keepends=True):
+            # A wikilink alias uses '|'; inside a markdown table that '|' is a
+            # column separator and breaks the table on GitHub. Escape it there.
+            body = line.lstrip()
+            if body.startswith(">"):
+                body = body[1:].lstrip()
+            in_table = body.startswith("|")
+            new_line = line
+            for m in MD_LINK_RE.finditer(line):
+                display, tgt = m.group(1), m.group(2)
+                if "://" in tgt or tgt.startswith(("mailto:", "/", "<")):
+                    continue
+                if "#" in tgt or "?" in tgt:
+                    href = tgt.split("#", 1)[0].split("?", 1)[0]
+                    if href and Path(href).suffix.lower() == ".md" and not (f.parent / href).exists():
+                        report.skip(rel, f"link '{tgt}' has an anchor/query — not auto-converted")
+                    continue
+                href = tgt
+                if Path(href).suffix.lower() != ".md":
+                    continue  # only note links become wikilinks
+                if (f.parent / href).exists():
+                    continue  # not broken — leave working links alone
+                if siblings & set(Path(href).parts):
+                    continue  # cross-repo
+                if "/" in display.strip():
+                    report.skip(rel, f"link '{tgt}' — display is a path, kept as-is (file reference)")
+                    continue
+                stem = Path(href).stem
+                candidates = stems.get(stem, [])
+                if len(candidates) != 1:
+                    report.skip(rel, f"link '{href}' not convertible "
+                                     f"({len(candidates)} note(s) named {stem})")
+                    continue
+                note = candidates[0]
+                try:
+                    note.relative_to(vault)
+                except ValueError:
+                    report.skip(rel, f"link '{href}' — target outside vault ({note.name}), kept as-is")
+                    continue
+                if NON_NOTE_SEGMENTS & set(note.relative_to(target).parts):
+                    report.skip(rel, f"link '{href}' — template/config asset, kept as-is")
+                    continue
+                alias = _clean_display(display, stem)
+                sep = "\\|" if in_table else "|"
+                wl = f"[[{stem}]]" if alias is None else f"[[{stem}{sep}{alias}]]"
+                new_line = new_line.replace(m.group(0), wl)
+                report.act("wikilink", rel, f"{m.group(0)} -> {wl}")
+            out_lines.append(new_line)
+        new_text = "".join(out_lines)
+        if new_text != text:
+            if show_diff:
+                _print_diff(rel, text, new_text)
+            if report.apply:
+                f.write_text(new_text, encoding="utf-8")
 
 
 FIXERS = {"links": fix_links, "wikilinks": fix_wikilinks}
