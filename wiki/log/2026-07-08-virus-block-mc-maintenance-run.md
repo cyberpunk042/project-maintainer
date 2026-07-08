@@ -31,3 +31,21 @@
 2. `clean --diff` dry-run preview (trailing-ws) → review.
 3. `fix --fixers links` dry-run → confirm the 3 broken links are safely skipped.
 4. Apply trailing-ws cleanup on the target's feature branch; push; draft PR; operator reviews before merge.
+
+## Correction pass (operator: "WHERE IS THE ADAPTATING AND THE REVIEW OF THE RESULT ??????")
+
+The first pass under-delivered on two of the operator's explicit words — *"adapt the tool first"* and *"review before merging"*. Redone properly:
+
+### Adaptation 1 — coverage (the tool only saw 34% of the docs)
+
+`doc_roots()` only returned **directories**, so the target's biggest doc (root `readme.md`) and all top-level + `src/`/`config/` markdown were silently skipped — 53 of 156 `.md` scanned. Fix: `docs:` registry entries may now be **files** as well as dirs (`iter_doc_files()`), deduped, still honoring `SKIP_DIRS`. Registry entry expanded to `[docs, readme.md, INSTRUCTIONS.md, investigation_report.md, LICENSE-CLARIFICATION.md, config, src]`; `.agent/` deliberately excluded (agent scratch). Tests: `TestDocsListFileEntries` (4).
+
+### Adaptation 2 — the trailing-ws fixer was collapsing Markdown hard breaks
+
+**Review finding:** a content line ending in **2+ trailing spaces is a CommonMark hard line break (`<br>`)**. The old fixer stripped them blindly — a *rendering* change, not cosmetic. The first (pushed) docs-only pass stripped **~20 hard breaks**, and `readme.md` alone carries **88** that the naive fixer would have destroyed. Fix: `clean_trailing_ws()` preserves hard breaks; strips only whitespace-only lines and single trailing spaces/tabs; audit's `trailing-ws` detector uses the same rule so audit and clean agree. Test: `test_preserves_markdown_hard_break`.
+
+### Reviewed result (redone on the target, from a clean `master` base)
+
+- 31 files, **whitespace-only** (`git diff --ignore-all-space` empty).
+- **0 hard breaks stripped** (was 20); `readme.md` left entirely untouched (all-hard-break).
+- selfcheck green, **61 tests**.

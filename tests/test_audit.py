@@ -89,5 +89,46 @@ class TestAuditFixture(unittest.TestCase):
             self.assertEqual(len(_checks(findings, "conflict")), 1)
 
 
+class TestDocsListFileEntries(unittest.TestCase):
+    """A registry `docs:` entry may be a FILE (e.g. a top-level readme.md), not
+    just a directory — the adaptation that lets non-wiki targets get covered."""
+
+    def test_top_level_file_entry_is_scanned(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "docs/inner.md", "clean\n")
+            _mk(root, "readme.md", "trailing here \n")   # root file a docs/-only scan misses
+            entry = Project(name="fx", path=str(root), docs=["docs", "readme.md"])
+            findings = audit_target(root, entry, siblings=set())
+            tw = {f.path for f in _checks(findings, "trailing-ws")}
+            self.assertIn("readme.md", tw)
+
+    def test_dir_only_scan_misses_root_file(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "docs/inner.md", "clean\n")
+            _mk(root, "readme.md", "trailing here \n")
+            entry = Project(name="fx", path=str(root), docs=["docs"])   # dir only
+            findings = audit_target(root, entry, siblings=set())
+            self.assertEqual(_checks(findings, "trailing-ws"), [])
+
+    def test_file_entry_not_double_counted(self):
+        # a file that also lives under a scanned dir must be yielded once
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "docs/page.md", "dup \n")
+            entry = Project(name="fx", path=str(root), docs=["docs", "docs/page.md"])
+            findings = audit_target(root, entry, siblings=set())
+            self.assertEqual(len(_checks(findings, "trailing-ws")), 1)
+
+    def test_skip_dirs_still_excluded_for_file_entries(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "build/generated.md", "trailing \n")   # build is a SKIP_DIR
+            entry = Project(name="fx", path=str(root), docs=["build/generated.md"])
+            findings = audit_target(root, entry, siblings=set())
+            self.assertEqual(_checks(findings, "trailing-ws"), [])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -52,12 +52,12 @@ projects:
   the-virus-block-mc:
     path: ~/the-virus-block-mc
     remote: https://github.com/cyberpunk042/the-virus-block-mc
-    docs: [docs]
+    docs: [docs, readme.md, INSTRUCTIONS.md, investigation_report.md, LICENSE-CLARIFICATION.md, config, src]
     wiki: ""
     brain: none
     writable: true
     language_policy: flag-only
-    notes: "Java/Gradle Minecraft mod (shaders/rendering). Not an Obsidian vault — do NOT run fix --fixers wikilinks here. docs/ tree only; root readme.md/INSTRUCTIONS.md left out of scan by design. Unknown-intent target -> flag-only."
+    notes: "Java/Gradle Minecraft mod (shaders/rendering). Not an Obsidian vault — do NOT run fix --fixers wikilinks here. docs: list mixes dirs + top-level files (root readme.md was the biggest doc a docs/-only scan missed) — the tool now scans file-entries too. `.agent/` is deliberately EXCLUDED (agent scratch/working notes); add it if you want that cleaned. Unknown-intent target -> flag-only."
 
   second-brain:
     path: ~/devops-solutions-information-hub

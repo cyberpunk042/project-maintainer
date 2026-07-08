@@ -31,10 +31,10 @@ class TestClean(unittest.TestCase):
             _repo(root)
             (root / "docs").mkdir()
             f = root / "docs" / "x.md"
-            f.write_text("trailing   \nok\n", encoding="utf-8")
+            f.write_text("trailing \nok\n", encoding="utf-8")  # single trailing space
             out = _run(["--target", str(root)])
             self.assertIn("WOULD strip trailing-ws", out)
-            self.assertEqual(f.read_text(), "trailing   \nok\n")  # untouched
+            self.assertEqual(f.read_text(), "trailing \nok\n")  # untouched
 
     def test_apply_writes(self):
         with tempfile.TemporaryDirectory() as d:
@@ -42,7 +42,7 @@ class TestClean(unittest.TestCase):
             _repo(root)
             (root / "docs").mkdir()
             f = root / "docs" / "x.md"
-            f.write_text("trailing   \nok\n", encoding="utf-8")
+            f.write_text("trailing \nok\n", encoding="utf-8")
             subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
             subprocess.run(["git", "-C", str(root), "commit", "-qm", "seed"], check=True, capture_output=True)
             _run(["--target", str(root), "--apply"])
@@ -53,11 +53,26 @@ class TestClean(unittest.TestCase):
             root = Path(d)
             _repo(root)
             (root / "docs").mkdir()
-            (root / "docs" / "x.md").write_text("trailing   \nok\n", encoding="utf-8")
+            (root / "docs" / "x.md").write_text("trailing \nok\n", encoding="utf-8")
             out = _run(["--target", str(root), "--diff"])
             self.assertIn("--- a/docs/x.md", out)
             self.assertIn("+++ b/docs/x.md", out)
             self.assertIn("-trailing", out)
+
+    def test_preserves_markdown_hard_break(self):
+        # content line ending in >=2 spaces is a CommonMark hard break (<br>);
+        # it must survive the cleaner. A whitespace-only line is still stripped.
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _repo(root)
+            (root / "docs").mkdir()
+            f = root / "docs" / "x.md"
+            f.write_text("line one  \nline two\n   \nend\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
+            subprocess.run(["git", "-C", str(root), "commit", "-qm", "seed"], check=True, capture_output=True)
+            _run(["--target", str(root), "--apply"])
+            # hard break "line one  " preserved; blank "   " collapsed to ""
+            self.assertEqual(f.read_text(), "line one  \nline two\n\nend\n")
 
     def test_junk_deletion(self):
         with tempfile.TemporaryDirectory() as d:

@@ -12,17 +12,14 @@ before --apply. Further fixer classes land per recurring audit finding
 from __future__ import annotations
 
 import argparse
-import re
 import sys
 
 import difflib
 
-from tools.audit import JUNK_NAMES, JUNK_SUFFIXES, doc_roots, iter_files
+from tools.audit import JUNK_NAMES, JUNK_SUFFIXES, clean_trailing_ws, iter_doc_files
 from tools._mutate import ChangeReport, add_mutation_args, guard
 from tools.language import DEFAULT_POLICY, load_config, redact_text, tiers_for_policy
 from tools.registry import resolve_target
-
-TRAILING_WS_RE = re.compile(r"[ \t]+$", re.MULTILINE)
 
 
 def _print_diff(rel, before: str, after: str) -> None:
@@ -64,39 +61,38 @@ def main(argv: list[str]) -> int:
         else:
             lang_cfg = load_config()
 
-    for root in doc_roots(target, entry):
-        for f in iter_files(root):
-            rel = f.relative_to(target)
-            if "junk" in fixers and (f.name in JUNK_NAMES or f.name.endswith(JUNK_SUFFIXES)):
-                report.act("delete", rel)
-                if args.apply:
-                    f.unlink()
+    for f in iter_doc_files(target, entry):
+        rel = f.relative_to(target)
+        if "junk" in fixers and (f.name in JUNK_NAMES or f.name.endswith(JUNK_SUFFIXES)):
+            report.act("delete", rel)
+            if args.apply:
+                f.unlink()
+            continue
+        if "trailing-ws" in fixers and f.suffix.lower() in (".md", ".markdown"):
+            try:
+                text = f.read_text(encoding="utf-8")
+            except (UnicodeDecodeError, OSError):
+                report.skip(rel, "unreadable as utf-8")
                 continue
-            if "trailing-ws" in fixers and f.suffix.lower() in (".md", ".markdown"):
-                try:
-                    text = f.read_text(encoding="utf-8")
-                except (UnicodeDecodeError, OSError):
-                    report.skip(rel, "unreadable as utf-8")
-                    continue
-                cleaned = TRAILING_WS_RE.sub("", text)
-                if cleaned != text:
-                    report.act("strip trailing-ws", rel)
-                    if args.diff:
-                        _print_diff(rel, text, cleaned)
-                    if args.apply:
-                        f.write_text(cleaned, encoding="utf-8")
-            if lang_cfg is not None and f.suffix.lower() in (".md", ".markdown") and f.name != "language.yaml":
-                try:
-                    text = f.read_text(encoding="utf-8")
-                except (UnicodeDecodeError, OSError):
-                    continue
-                new_text, n = redact_text(text, lang_cfg, lang_tiers)
-                if n:
-                    report.act("redact language", rel, f"{n} match(es) [{'+'.join(sorted(lang_tiers))}]")
-                    if args.diff:
-                        _print_diff(rel, text, new_text)
-                    if args.apply:
-                        f.write_text(new_text, encoding="utf-8")
+            cleaned = clean_trailing_ws(text)
+            if cleaned != text:
+                report.act("strip trailing-ws", rel)
+                if args.diff:
+                    _print_diff(rel, text, cleaned)
+                if args.apply:
+                    f.write_text(cleaned, encoding="utf-8")
+        if lang_cfg is not None and f.suffix.lower() in (".md", ".markdown") and f.name != "language.yaml":
+            try:
+                text = f.read_text(encoding="utf-8")
+            except (UnicodeDecodeError, OSError):
+                continue
+            new_text, n = redact_text(text, lang_cfg, lang_tiers)
+            if n:
+                report.act("redact language", rel, f"{n} match(es) [{'+'.join(sorted(lang_tiers))}]")
+                if args.diff:
+                    _print_diff(rel, text, new_text)
+                if args.apply:
+                    f.write_text(new_text, encoding="utf-8")
     return report.print(f"CLEAN {target}")
 
 
