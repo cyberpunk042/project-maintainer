@@ -6,7 +6,7 @@
 
 <!-- ADAPT: append operator directives verbatim, newest last. Never delete old ones. -->
 
-Full log: [wiki/log/](wiki/log/) (verbatim, sacrosanct). Log new directives there BEFORE acting.
+Full log: [{{LOG}}/]({{LOG}}/) (verbatim, sacrosanct). Log new directives there BEFORE acting.
 
 ## Identity Profile (Goldilocks)
 
@@ -24,7 +24,7 @@ Full log: [wiki/log/](wiki/log/) (verbatim, sacrosanct). Log new directives ther
 
 | # | Rule |
 |---|---|
-| 1 | **Operator words are SACROSANCT** — quote verbatim; log to `wiki/log/YYYY-MM-DD-<slug>.md` BEFORE acting. |
+| 1 | **Operator words are SACROSANCT** — quote verbatim; log to `{{LOG}}/YYYY-MM-DD-<slug>.md` BEFORE acting. |
 | 2 | **Adding ≠ discarding** — new direction layers onto prior direction; never wholesale-replace unless explicitly directed. |
 | 3 | **Status claims must inline verification output** — "done" without command output is aspirational. |
 | 4 | **Don't fabricate** — operator never said it = don't claim they did; investigate with project tools first. |
@@ -34,7 +34,7 @@ Full log: [wiki/log/](wiki/log/) (verbatim, sacrosanct). Log new directives ther
 
 ## Methodology
 
-Stage-gate methodology per the second-brain adoption guide: 5 stages (document → design → scaffold → implement → test), hard ALLOWED/FORBIDDEN boundaries, backlog at `wiki/backlog/` (epic → module → task, readiness flows up).
+Stage-gate methodology per the second-brain adoption guide: 5 stages (document → design → scaffold → implement → test), hard ALLOWED/FORBIDDEN boundaries, backlog at `{{BACKLOG}}/` (epic → module → task, readiness flows up).
 
 <!-- ADAPT: bind quality-gate commands to this project's stack (build/lint/test commands per stage). -->
 
@@ -44,5 +44,5 @@ Stage-gate methodology per the second-brain adoption guide: 5 stages (document �
 |---|---|
 | Universal cross-tool rules | [AGENTS.md](AGENTS.md) |
 | Solo-session pattern + approval boundary | [.claude/rules/work-mode.md](.claude/rules/work-mode.md) |
-| Backlog | [wiki/backlog/](wiki/backlog/) |
-| Operator directives (verbatim) | [wiki/log/](wiki/log/) |
+| Backlog | [{{BACKLOG}}/]({{BACKLOG}}/) |
+| Operator directives (verbatim) | [{{LOG}}/]({{LOG}}/) |

@@ -24,6 +24,13 @@ class Project:
     writable: bool = False
     language_policy: str = "flag-only"
     frontmatter_exempt: list[str] = field(default_factory=list)
+    # Where the epic>module>task backlog and the verbatim operator-directive log
+    # live IN THIS TARGET. The adoption guide makes these paths per-project
+    # ("if your backlog lives at a different path, update all references"); only
+    # the hierarchy is sacrosanct, not the wiki/ prefix. Empty -> the ecosystem
+    # default (wiki/backlog, wiki/log), resolved by tools.implant.
+    backlog_root: str = ""
+    log_root: str = ""
     notes: str = ""
 
     def resolved_path(self) -> Path:
@@ -102,6 +109,8 @@ def load_registry(registry_file: Path = REGISTRY_FILE) -> dict[str, Project]:
             writable=bool(fields.get("writable", False)),
             language_policy=str(fields.get("language_policy", "flag-only") or "flag-only"),
             frontmatter_exempt=list(fields.get("frontmatter_exempt", []) or []),
+            backlog_root=str(fields.get("backlog_root", "") or ""),
+            log_root=str(fields.get("log_root", "") or ""),
             notes=str(fields.get("notes", "")),
         )
     return result

@@ -8,7 +8,7 @@
 
 ## Universal Hard Rules
 
-1. **Operator words are sacrosanct.** Quote verbatim, never paraphrase. Log directives to `wiki/log/YYYY-MM-DD-<slug>.md` BEFORE acting.
+1. **Operator words are sacrosanct.** Quote verbatim, never paraphrase. Log directives to `{{LOG}}/YYYY-MM-DD-<slug>.md` BEFORE acting.
 2. **Adding ≠ discarding.** Layer new direction onto old; never wholesale-replace unless the operator explicitly directs.
 3. **Verify status claims.** "Done" must inline the verifying command's output in the same response.
 4. **Don't fabricate.** Investigate with project tools before asserting facts about state.
@@ -22,5 +22,5 @@
 
 | Path | What |
 |---|---|
-| `wiki/backlog/` | Epic → module → task backlog (readiness flows up) |
-| `wiki/log/` | Operator directives, verbatim, date-prefixed |
+| `{{BACKLOG}}/` | Epic → module → task backlog (readiness flows up) |
+| `{{LOG}}/` | Operator directives, verbatim, date-prefixed |

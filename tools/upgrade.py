@@ -12,7 +12,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-from tools.implant import MANIFEST, substitute
+from tools.implant import build_manifest, substitute
 from tools._mutate import ChangeReport, add_mutation_args, guard, propose
 from tools._paths import TEMPLATES_DIR
 from tools.registry import resolve_target
@@ -27,7 +27,7 @@ def main(argv: list[str]) -> int:
     name = entry.name if entry else target.name
     report = ChangeReport(apply=args.apply)
 
-    for src_rel, dst_rel in MANIFEST.items():
+    for src_rel, dst_rel in build_manifest(entry).items():
         src = TEMPLATES_DIR / src_rel
         dst = target / dst_rel
         if not src.is_file():
@@ -36,7 +36,7 @@ def main(argv: list[str]) -> int:
         if not dst.exists():
             report.skip(dst_rel, "not implanted (run pm implant)")
             continue
-        canonical = substitute(src.read_text(encoding="utf-8"), name)
+        canonical = substitute(src.read_text(encoding="utf-8"), name, entry)
         if dst.read_text(encoding="utf-8") == canonical:
             report.skip(dst_rel, "up to date")
             continue

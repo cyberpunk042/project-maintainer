@@ -15,6 +15,17 @@ Every MUTATING verb (clean, fix, implant, upgrade, migrate, scaffold) additional
 - prints a change report: `WOULD <action> <path>` (dry-run) / `DID <action> <path>` (apply) / `SKIP <path>: <reason>`
 - is idempotent: second `--apply` run reports 0 changes
 
+**Brain layout is per-project, not hardcoded.** The adoption guide makes the
+backlog and operator-log paths a per-project choice — only the epic>module>task
+hierarchy is sacrosanct, not the `wiki/` prefix. `implant`/`upgrade`/`scaffold`
+resolve those paths from the registry's `backlog_root` / `log_root` (empty →
+ecosystem default `wiki/backlog` + `wiki/log`); the brain templates carry
+`{{BACKLOG}}` / `{{LOG}}` placeholders. A target that already keeps a `backlog/`
+and directive log elsewhere (e.g. sovereign-os `backlog/` + `docs/standing-directives/`)
+must declare those roots so implant lands ON them instead of creating a parallel
+`wiki/`. `structure_advisories` warns when a configured path would duplicate an
+existing populated tree.
+
 ## Routing table
 
 | Operator says... | Verb | Notes |

@@ -12,18 +12,20 @@ from datetime import date
 
 from tools._mutate import ChangeReport, add_mutation_args, guard, propose
 from tools._paths import TEMPLATES_DIR
+from tools.implant import backlog_root, substitute
 from tools.registry import resolve_target
 
-DESTINATIONS = {
-    "backlog/epic": "wiki/backlog/epics/{name}.md",
-    "backlog/module": "wiki/backlog/modules/{name}.md",
-    "backlog/task": "wiki/backlog/tasks/{name}.md",
+# Subpath under the target's backlog_root for each scaffoldable type.
+DEST_SUBPATHS = {
+    "backlog/epic": "epics/{name}.md",
+    "backlog/module": "modules/{name}.md",
+    "backlog/task": "tasks/{name}.md",
 }
 
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(prog="pm scaffold", description=__doc__)
-    ap.add_argument("type", help=f"template type: {', '.join(DESTINATIONS)}")
+    ap.add_argument("type", help=f"template type: {', '.join(DEST_SUBPATHS)}")
     ap.add_argument("--name", default="new-item", help="destination slug")
     add_mutation_args(ap)
     args = ap.parse_args(argv)
@@ -32,11 +34,11 @@ def main(argv: list[str]) -> int:
     report = ChangeReport(apply=args.apply)
 
     src = TEMPLATES_DIR / f"{args.type}.md"
-    if args.type not in DESTINATIONS or not src.is_file():
-        raise SystemExit(f"ERROR: unknown template type '{args.type}' (have: {', '.join(DESTINATIONS)})")
-    dst = target / DESTINATIONS[args.type].format(name=args.name)
-    content = (src.read_text(encoding="utf-8")
-               .replace("{{PROJECT}}", entry.name if entry else target.name)
+    if args.type not in DEST_SUBPATHS or not src.is_file():
+        raise SystemExit(f"ERROR: unknown template type '{args.type}' (have: {', '.join(DEST_SUBPATHS)})")
+    dst = target / backlog_root(entry) / DEST_SUBPATHS[args.type].format(name=args.name)
+    content = (substitute(src.read_text(encoding="utf-8"),
+                          entry.name if entry else target.name, entry)
                .replace("{{NAME}}", args.name)
                .replace("{{DATE}}", date.today().isoformat()))
     if dst.exists():
