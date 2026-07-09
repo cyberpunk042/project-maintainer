@@ -83,6 +83,21 @@ class TestRedact(unittest.TestCase):
         self.assertEqual(once, twice)
         self.assertEqual(n, 0)
 
+    def test_redact_skips_fenced_code(self):
+        # a slur/vulgar token inside a code fence is a data literal, not prose —
+        # redaction must leave it byte-exact and only touch prose.
+        src = 'the fucking prose\n```python\nterms = ["fucking", "retard"]\n```\ntail retard\n'
+        out, n = redact_text(src, CFG, {"vulgar", "slur"})
+        self.assertIn('terms = ["fucking", "retard"]', out)   # code untouched
+        self.assertNotIn("fucking prose", out)                 # prose redacted
+        self.assertNotIn("tail retard", out)
+        self.assertEqual(n, 2)                                 # only the 2 prose tokens
+
+    def test_redact_skips_inline_code(self):
+        out, n = redact_text("run `grep fucking file` now, fucking", CFG, {"vulgar"})
+        self.assertIn("`grep fucking file`", out)              # inline code untouched
+        self.assertEqual(n, 1)                                 # only the trailing prose token
+
 
 if __name__ == "__main__":
     unittest.main()

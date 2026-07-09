@@ -37,4 +37,7 @@ Targets in [projects.yaml](projects.yaml): sovereign-os (`flag-only`), selfdef (
 
 ## Recent runs
 
-- **2026-07-09 — NNRT test + improve cycle** ([log](wiki/log/2026-07-09-nnrt-test-and-improve-directive.md)). Registered nnrt; full audit accurate (0 structural, 1 legit-data vulgar). Surfaced + fixed a precision bug: the trailing-ws cleaner was not fenced-code-block aware (applied the hard-break rule inside code fences, and inconsistently stripped inside them). Now: prose cleaned hard-break-safe, **fenced code left byte-exact**. NNRT trailing-ws findings dropped 28→10 (noise removed). +2 tests (63 total). No mutation applied to NNRT — awaits operator go.
+- **2026-07-09 — NNRT test + improve (2 cycles)** ([log](wiki/log/2026-07-09-nnrt-test-and-improve-directive.md)). Registered nnrt; full audit accurate. Recurring theme both cycles: **code content must not be scanned as prose.**
+  - *Cycle 1:* trailing-ws cleaner made fenced-code aware — prose cleaned hard-break-safe, fenced code left byte-exact. NNRT trailing-ws 28→10.
+  - *Cycle 2:* added `mask_code()`; broken-link / cross-repo / slur / vulgar now scan code-masked text, and `redact_text` is code-aware to match. NNRT vulgar 1→0; second-brain broken-link 133→126 (code-example false positives). Genuine findings still surfaced.
+  - `selfcheck`: **67 tests pass**. No mutation applied to any target — cleanup awaits operator go.
