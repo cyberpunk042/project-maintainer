@@ -91,3 +91,36 @@ profanity still flagged (tested). `selfcheck`: **67 tests pass**.
 The remaining 126 second-brain broken-links are genuine (repo-root-relative
 links written as file-relative, links into `.claude/` / sibling repos) — but
 second-brain is READ-ONLY from here; we surface, its own session fixes them.
+
+## Cycle 3 — the thin verbs (implant/upgrade/scaffold/migrate) on a fixture
+
+Drove the whole lifecycle against a throwaway git fixture (the least-tested
+scaffold-tier code). `implant` stamp + `{{PROJECT}}` substitution + idempotency
++ conflict→`.proposed`, `upgrade` up-to-date, `scaffold` stamp/propose,
+`migrate` list/apply/idempotent-replay + the `0001-ensure-final-newline`
+migration all verified working (migrate correctly plans a fix for a file with no
+final newline — the earlier "0 changes" was a genuinely-clean fixture, not a
+no-op bug).
+
+**Bug found + fixed — the `.proposed` conflict path was not idempotent and
+could clobber operator work.** `implant`, `upgrade`, and `scaffold` each wrote
+`<name>.proposed` *unconditionally* when the destination existed + differed. So:
+(1) re-running the verb re-proposed every time — "1 change" on every run, a
+routing-contract idempotency violation ("second `--apply` reports 0 changes");
+and (2) worse, if the operator had started merging/editing the `.proposed`, the
+next run silently **overwrote their in-progress merge** — a data-loss risk in
+the additive-review workflow that Hard Rule 8 exists to prevent.
+
+Fix: one shared `propose()` helper in `tools/_mutate.py` used by all three
+verbs. It stages `<dst>.proposed` additively:
+
+- absent → propose (WOULD/DID)
+- present + identical → SKIP "already proposed (identical)" — idempotent no-op
+- present + differs → SKIP "resolve/remove it before re-proposing" — never
+  clobbers the operator's file
+
++3 regression tests (re-propose-identical no-op, no-clobber-operator-edit,
+scaffold conflict idempotency). `selfcheck`: **70 tests pass**.
+
+All four thin verbs now honour the full mutating-verb contract (dry-run default,
+dirty-refusal, writable gating, additive `.proposed`, idempotency) end-to-end.

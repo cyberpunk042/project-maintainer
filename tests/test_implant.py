@@ -70,6 +70,50 @@ class TestImplantFunctional(unittest.TestCase):
             self.assertEqual((root / "CLAUDE.md").read_text(), "locally edited\n")
 
 
+class TestProposeIdempotency(unittest.TestCase):
+    """The .proposed conflict path must be idempotent AND never clobber an
+    operator's in-progress .proposed (routing contract + Hard Rule 8)."""
+
+    def _seed_conflict(self, root: Path) -> Path:
+        """Implant, then drift CLAUDE.md so the next implant proposes a sibling."""
+        _run(implant, ["--target", str(root), "--apply"])
+        (root / "CLAUDE.md").write_text("locally edited\n", encoding="utf-8")
+        subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
+        subprocess.run(["git", "-C", str(root), "commit", "-qm", "drift"], check=True, capture_output=True)
+        _run(implant, ["--target", str(root), "--apply"])   # creates .proposed
+        return root / "CLAUDE.md.proposed"
+
+    def test_reproposing_identical_is_noop(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _repo(root)
+            proposed = self._seed_conflict(root)
+            self.assertTrue(proposed.exists())
+            first = proposed.read_text()
+            subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
+            subprocess.run(["git", "-C", str(root), "commit", "-qm", "proposed"], check=True, capture_output=True)
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                implant.main(["--target", str(root), "--apply"])
+            out = buf.getvalue()
+            self.assertIn("already proposed (identical)", out)
+            self.assertIn("0 change(s) applied", out)
+            self.assertEqual(proposed.read_text(), first)      # unchanged
+
+    def test_does_not_clobber_operator_edited_proposed(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _repo(root)
+            proposed = self._seed_conflict(root)
+            # operator starts merging the .proposed
+            proposed.write_text("MY MERGE IN PROGRESS\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
+            subprocess.run(["git", "-C", str(root), "commit", "-qm", "merge"], check=True, capture_output=True)
+            _run(implant, ["--target", str(root), "--apply"])
+            # re-running must NOT overwrite the operator's work
+            self.assertEqual(proposed.read_text(), "MY MERGE IN PROGRESS\n")
+
+
 class TestScaffold(unittest.TestCase):
     def test_scaffold_task_stamps(self):
         with tempfile.TemporaryDirectory() as d:
@@ -77,6 +121,29 @@ class TestScaffold(unittest.TestCase):
             _repo(root)
             _run(scaffold, ["backlog/task", "--name", "T001-demo", "--target", str(root), "--apply"])
             self.assertTrue((root / "wiki/backlog/tasks/T001-demo.md").is_file())
+
+    def test_scaffold_conflict_proposes_then_idempotent(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _repo(root)
+            args = ["backlog/task", "--name", "T001-demo", "--target", str(root), "--apply"]
+
+            def commit(msg):
+                subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True)
+                subprocess.run(["git", "-C", str(root), "commit", "-qm", msg], check=True, capture_output=True)
+
+            _run(scaffold, args)
+            commit("scaffold")
+            _run(scaffold, args)                                # dest exists -> propose
+            proposed = root / "wiki/backlog/tasks/T001-demo.md.proposed"
+            self.assertTrue(proposed.exists())
+            body = proposed.read_text()
+            commit("proposed")
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                scaffold.main(args)                             # .proposed identical -> noop
+            self.assertIn("0 change(s) applied", buf.getvalue())
+            self.assertEqual(proposed.read_text(), body)
 
 
 if __name__ == "__main__":

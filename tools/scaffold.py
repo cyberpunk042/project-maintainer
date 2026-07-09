@@ -10,7 +10,7 @@ import argparse
 import sys
 from datetime import date
 
-from tools._mutate import ChangeReport, add_mutation_args, guard
+from tools._mutate import ChangeReport, add_mutation_args, guard, propose
 from tools._paths import TEMPLATES_DIR
 from tools.registry import resolve_target
 
@@ -40,13 +40,12 @@ def main(argv: list[str]) -> int:
                .replace("{{NAME}}", args.name)
                .replace("{{DATE}}", date.today().isoformat()))
     if dst.exists():
-        dst = dst.with_name(dst.name + ".proposed")
-        report.act("propose", dst.relative_to(target), "destination exists")
+        propose(report, target, dst, content, args.apply, "destination exists")
     else:
         report.act("stamp", dst.relative_to(target))
-    if args.apply:
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        dst.write_text(content, encoding="utf-8")
+        if args.apply:
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            dst.write_text(content, encoding="utf-8")
     return report.print(f"SCAFFOLD {args.type} -> {target}")
 
 

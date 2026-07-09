@@ -65,6 +65,38 @@ def guard(target: Path, entry: Project | None, apply: bool, allow_dirty: bool,
         print(f"NOTE: --allow-dirty on {target} (operator-visible per Hard Rule 4)")
 
 
+def propose(report: "ChangeReport", target: Path, dst: Path, content: str, apply: bool,
+            detail: str = "") -> None:
+    """Additively stage `content` at `<dst>.proposed` for operator review.
+
+    Hard Rule 8 (never overwrite) applied to the .proposed sibling itself, plus
+    idempotency (routing contract: a second --apply reports 0 changes):
+
+    - `.proposed` absent           -> propose it (WOULD/DID propose)
+    - `.proposed` present, identical-> SKIP (already proposed) — idempotent no-op
+    - `.proposed` present, differs  -> SKIP without writing: it may be the
+      operator's in-progress merge; re-proposing would clobber their work.
+
+    `dst` is the canonical destination (the file that already exists and differs,
+    or where a scaffold would land); the sibling is `<dst>.proposed`."""
+    proposed = dst.with_name(dst.name + ".proposed")
+    rel = proposed.relative_to(target)
+    if proposed.exists():
+        try:
+            existing = proposed.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            existing = None
+        if existing == content:
+            report.skip(rel, "already proposed (identical) — idempotent")
+        else:
+            report.skip(rel, ".proposed exists and differs — resolve/remove it before re-proposing")
+        return
+    report.act("propose", rel, detail)
+    if apply:
+        proposed.parent.mkdir(parents=True, exist_ok=True)
+        proposed.write_text(content, encoding="utf-8")
+
+
 @dataclass
 class ChangeReport:
     apply: bool

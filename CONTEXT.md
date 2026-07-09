@@ -40,4 +40,5 @@ Targets in [projects.yaml](projects.yaml): sovereign-os (`flag-only`), selfdef (
 - **2026-07-09 — NNRT test + improve (2 cycles)** ([log](wiki/log/2026-07-09-nnrt-test-and-improve-directive.md)). Registered nnrt; full audit accurate. Recurring theme both cycles: **code content must not be scanned as prose.**
   - *Cycle 1:* trailing-ws cleaner made fenced-code aware — prose cleaned hard-break-safe, fenced code left byte-exact. NNRT trailing-ws 28→10.
   - *Cycle 2:* added `mask_code()`; broken-link / cross-repo / slur / vulgar now scan code-masked text, and `redact_text` is code-aware to match. NNRT vulgar 1→0; second-brain broken-link 133→126 (code-example false positives). Genuine findings still surfaced.
-  - `selfcheck`: **67 tests pass**. No mutation applied to any target — cleanup awaits operator go.
+  - *Cycle 3:* drove `implant`/`upgrade`/`scaffold`/`migrate` on a fixture. Found + fixed a contract bug: the `.proposed` conflict path was not idempotent and could overwrite an operator's in-progress merge. Shared `propose()` helper in `_mutate.py`: additive, idempotent, never clobbers. All four thin verbs now honour the full mutating-verb contract end-to-end.
+  - `selfcheck`: **70 tests pass**. No mutation applied to any real target — cleanup awaits operator go.
