@@ -34,6 +34,28 @@ def substitute(text: str, project_name: str) -> str:
     return text.replace("{{PROJECT}}", project_name)
 
 
+# Root-level dirs whose leaf name collides with a wiki/ subtree we stamp — a
+# target that already organises these at the root (flat layout) would get a
+# PARALLEL wiki/ copy rather than integration. Surface it so the operator can
+# decide (migrate the existing tree, or adapt the manifest) before --apply.
+_WIKI_LEAVES = {"backlog", "log"}
+
+
+def structure_advisories(target: Path) -> list[str]:
+    if (target / "wiki").is_dir():
+        return []                                   # already wiki-organised — no collision
+    notes: list[str] = []
+    for leaf in sorted(_WIKI_LEAVES):
+        existing = target / leaf
+        if existing.is_dir() and any(existing.iterdir()):
+            notes.append(
+                f"target already has a root '{leaf}/' — implant would create "
+                f"'wiki/{leaf}/' ALONGSIDE it (parallel, not integrated). "
+                f"Decide: migrate '{leaf}/' into wiki/, or adapt the manifest."
+            )
+    return notes
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(prog="pm implant", description=__doc__)
     add_mutation_args(ap)
@@ -70,6 +92,8 @@ def main(argv: list[str]) -> int:
                 dst.write_text(content, encoding="utf-8")
 
     rc = report.print(f"IMPLANT {name} -> {target}")
+    for note in structure_advisories(target):
+        print(f"  ADVISORY: {note}")
     if args.apply:
         print("NOTE: update projects.yaml brain: field for this target (operator-approved edit).")
     return rc
