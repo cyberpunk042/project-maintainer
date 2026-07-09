@@ -31,15 +31,29 @@ from pathlib import Path
 from tools.language import DEFAULT_POLICY, load_config, scan, tiers_for_policy
 from tools.registry import Project, load_registry, resolve_target
 
-def clean_trailing_ws(text: str) -> str:
-    """Strip trailing whitespace, but PRESERVE Markdown hard line breaks.
+FENCE_RE = re.compile(r"^\s*(?:`{3,}|~{3,})")
 
-    A line of non-blank content ending in >=2 spaces is a CommonMark hard line
-    break (renders as <br>); stripping it silently collapses two visually-separate
-    lines into one. So a trailing-whitespace cleaner MUST leave those alone.
-    We strip: whitespace-only lines (fully), and content lines ending in a single
-    trailing space or trailing tab(s). CRLF line endings are preserved."""
+
+def clean_trailing_ws(text: str) -> str:
+    """Strip trailing whitespace in PROSE, but preserve two things exactly:
+    Markdown hard line breaks, and the bytes inside fenced code blocks.
+
+    - A line of non-blank content ending in >=2 spaces is a CommonMark hard line
+      break (renders as <br>); stripping it silently collapses two
+      visually-separate lines into one. A trailing-whitespace cleaner MUST leave
+      those alone.
+    - Inside a fenced code block (``` / ~~~), the hard-break rule does not exist,
+      and trailing whitespace can be *content* — a code sample or a data/diff
+      fixture demonstrating whitespace behaviour (this tool maintains OTHER
+      repos, including text-processing ones). So fenced code content is left
+      byte-exact; only prose is cleaned.
+
+    In prose we strip: whitespace-only lines (fully), and content lines ending in
+    a single trailing space or trailing tab(s). Fence delimiter lines (the ```
+    themselves) are prose-structure and get the normal strip. CRLF line endings
+    are preserved."""
     out: list[str] = []
+    in_fence = False
     for line in text.splitlines(keepends=True):
         nl = ""
         if line.endswith("\r\n"):
@@ -48,7 +62,12 @@ def clean_trailing_ws(text: str) -> str:
             body, nl = line[:-1], line[-1]
         else:
             body = line
-        if body.strip() == "":
+        if FENCE_RE.match(body):
+            in_fence = not in_fence                 # delimiter: toggle, then clean it
+            body = re.sub(r"[ \t]+\Z", "", body)
+        elif in_fence:
+            pass                                    # code/data content — byte-exact
+        elif body.strip() == "":
             body = ""                              # dead whitespace-only line
         elif re.search(r"\S {2,}\Z", body):
             pass                                    # markdown hard break — keep

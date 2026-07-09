@@ -59,6 +59,16 @@ projects:
     language_policy: flag-only
     notes: "Java/Gradle Minecraft mod (shaders/rendering). Not an Obsidian vault — do NOT run fix --fixers wikilinks here. docs: list mixes dirs + top-level files (root readme.md was the biggest doc a docs/-only scan missed) — the tool now scans file-entries too. `.agent/` is deliberately EXCLUDED (agent scratch/working notes); add it if you want that cleaned. Unknown-intent target -> flag-only."
 
+  nnrt:
+    path: ~/Narrative-to-Neutral-Report-Transformer
+    remote: https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer
+    docs: [docs, README.md, CONTRIBUTING.md, LLM_VS_NLP_POSITIONING.md]
+    wiki: ""
+    brain: none
+    writable: true
+    language_policy: flag-only
+    notes: "Python project (narrative -> neutral report transformer). It DETECTS AND NEUTRALIZES loaded language, so its docs/specs carry loaded/vulgar/slur terms as DATA (dictionaries, examples, test corpora) — expect language findings that are legitimate content, not drift. Unknown-intent target -> flag-only (operator's canonical 'do not assume a project you dont know has intentional mean words' example). docs: dir + top-level prose docs. EXCLUDED: .agent/ + .gemini/ (agent scratch), LICENSE.md (legal boilerplate), data/ (test corpora)."
+
   second-brain:
     path: ~/devops-solutions-information-hub
     remote: https://github.com/cyberpunk042/devops-solutions-information-hub

@@ -33,4 +33,8 @@
 
 ## Registry snapshot
 
-Targets in [projects.yaml](projects.yaml): sovereign-os (`flag-only`), selfdef (`flag-only`), root-ghostproxy (`preserve` — sacrosanct verbatim), second-brain (`preserve`, READ-ONLY — never written from here).
+Targets in [projects.yaml](projects.yaml): sovereign-os (`flag-only`), selfdef (`flag-only`), root-ghostproxy (`preserve` — sacrosanct verbatim), the-virus-block-mc (`flag-only`), nnrt (`flag-only` — loaded-language tool; findings are often legitimate data), second-brain (`preserve`, READ-ONLY — never written from here).
+
+## Recent runs
+
+- **2026-07-09 — NNRT test + improve cycle** ([log](wiki/log/2026-07-09-nnrt-test-and-improve-directive.md)). Registered nnrt; full audit accurate (0 structural, 1 legit-data vulgar). Surfaced + fixed a precision bug: the trailing-ws cleaner was not fenced-code-block aware (applied the hard-break rule inside code fences, and inconsistently stripped inside them). Now: prose cleaned hard-break-safe, **fenced code left byte-exact**. NNRT trailing-ws findings dropped 28→10 (noise removed). +2 tests (63 total). No mutation applied to NNRT — awaits operator go.

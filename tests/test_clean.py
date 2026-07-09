@@ -74,6 +74,43 @@ class TestClean(unittest.TestCase):
             # hard break "line one  " preserved; blank "   " collapsed to ""
             self.assertEqual(f.read_text(), "line one  \nline two\n\nend\n")
 
+    def test_preserves_fenced_code_bytes(self):
+        # Inside a fenced code block the hard-break rule does not exist and
+        # trailing whitespace can be content. Fence content must be byte-exact;
+        # only the surrounding prose is cleaned.
+        from tools.audit import clean_trailing_ws
+        src = (
+            "prose trailing \n"          # single space -> stripped
+            "```python\n"
+            "x = 1   \n"                  # code content -> preserved byte-exact
+            "    \n"                      # blank-with-indent inside code -> preserved
+            "y = 2  \n"                   # 2 trailing spaces inside code -> preserved
+            "```\n"
+            "line one  \n"                # hard break in prose -> preserved
+            "   \n"                       # dead prose whitespace -> collapsed
+            "end\n"
+        )
+        expected = (
+            "prose trailing\n"
+            "```python\n"
+            "x = 1   \n"
+            "    \n"
+            "y = 2  \n"
+            "```\n"
+            "line one  \n"
+            "\n"
+            "end\n"
+        )
+        self.assertEqual(clean_trailing_ws(src), expected)
+
+    def test_fenced_code_is_idempotent_noop(self):
+        # A file whose ONLY trailing whitespace lives inside a code fence is
+        # already clean — the cleaner reports no change.
+        from tools.audit import clean_trailing_ws, has_cleanable_trailing_ws
+        src = "intro\n\n```\ndata\twith\ttabs   \n```\ndone\n"
+        self.assertFalse(has_cleanable_trailing_ws(src))
+        self.assertEqual(clean_trailing_ws(src), src)
+
     def test_junk_deletion(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
