@@ -14,7 +14,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-from tools._mutate import ChangeReport, add_mutation_args, guard
+from tools._mutate import ChangeReport, add_mutation_args, guard, propose
 from tools._paths import TEMPLATES_DIR
 from tools.registry import resolve_target
 
@@ -61,12 +61,8 @@ def main(argv: list[str]) -> int:
             if dst.read_text(encoding="utf-8") == content:
                 report.skip(dst_rel, "identical — already implanted")
                 continue
-            proposed = dst.with_name(dst.name + ".proposed")
-            report.act("propose", proposed.relative_to(target),
-                       "exists + differs; additive per Hard Rule 8")
-            if args.apply:
-                proposed.parent.mkdir(parents=True, exist_ok=True)
-                proposed.write_text(content, encoding="utf-8")
+            propose(report, target, dst, content, args.apply,
+                    "exists + differs; additive per Hard Rule 8")
         else:
             report.act("stamp", dst_rel)
             if args.apply:

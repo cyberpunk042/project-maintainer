@@ -13,7 +13,7 @@ import argparse
 import sys
 
 from tools.implant import MANIFEST, substitute
-from tools._mutate import ChangeReport, add_mutation_args, guard
+from tools._mutate import ChangeReport, add_mutation_args, guard, propose
 from tools._paths import TEMPLATES_DIR
 from tools.registry import resolve_target
 
@@ -40,10 +40,7 @@ def main(argv: list[str]) -> int:
         if dst.read_text(encoding="utf-8") == canonical:
             report.skip(dst_rel, "up to date")
             continue
-        proposed = dst.with_name(dst.name + ".proposed")
-        report.act("propose upgrade", proposed.relative_to(target), "drifted from canonical")
-        if args.apply:
-            proposed.write_text(canonical, encoding="utf-8")
+        propose(report, target, dst, canonical, args.apply, "drifted from canonical")
     return report.print(f"UPGRADE {name} -> {target}")
 
 
