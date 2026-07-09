@@ -132,28 +132,60 @@ def scan(text: str, cfg: LanguageConfig, tiers: set[str]) -> list[Match]:
     return matches
 
 
+_FENCE_RE = re.compile(r"^\s*(?:`{3,}|~{3,})")
+_INLINE_CODE_RE = re.compile(r"(`+)(?:(?!\1).)*\1")
+
+
 def redact_text(text: str, cfg: LanguageConfig, tiers: set[str]) -> tuple[str, int]:
-    """Return (new_text, n_replacements). Only the given tiers are touched."""
+    """Return (new_text, n_replacements). Only the given tiers are touched, and
+    only in PROSE — fenced code blocks and inline code spans are left byte-exact.
+
+    A profanity/slur token inside code is a data literal or dictionary entry, not
+    a prose word; redacting it would corrupt a code sample. This mirrors the
+    audit's code-masking so `flag` and `clean` agree on what counts as prose."""
     count = 0
 
-    def sub_tier(t: str, s: str) -> str:
+    def redact_segment(s: str) -> str:
         nonlocal count
-        pat = cfg.pattern(t)
-        if not pat:
-            return s
+        for tier in ("slur", "vulgar"):
+            if tier not in tiers:
+                continue
+            pat = cfg.pattern(tier)
+            if not pat:
+                continue
 
-        def repl(m: re.Match) -> str:
-            nonlocal count
-            count += 1
-            out = _redact(m.group(0), cfg)
-            return out
+            def repl(m: re.Match) -> str:
+                nonlocal count
+                count += 1
+                return _redact(m.group(0), cfg)
 
-        return pat.sub(repl, s)
+            s = pat.sub(repl, s)
+        return s
 
-    out = text
-    for tier in ("slur", "vulgar"):
-        if tier in tiers:
-            out = sub_tier(tier, out)
+    out_parts: list[str] = []
+    in_fence = False
+    for line in text.splitlines(keepends=True):
+        nl = ""
+        if line.endswith("\r\n"):
+            body, nl = line[:-2], "\r\n"
+        elif line.endswith(("\n", "\r")):
+            body, nl = line[:-1], line[-1]
+        else:
+            body = line
+        if _FENCE_RE.match(body) or in_fence:
+            if _FENCE_RE.match(body):
+                in_fence = not in_fence
+            out_parts.append(body + nl)             # fence delimiter / code content
+            continue
+        pieces: list[str] = []
+        last = 0
+        for m in _INLINE_CODE_RE.finditer(body):
+            pieces.append(redact_segment(body[last:m.start()]))
+            pieces.append(m.group(0))               # inline code span — untouched
+            last = m.end()
+        pieces.append(redact_segment(body[last:]))
+        out_parts.append("".join(pieces) + nl)
+    out = "".join(out_parts)
     # 'remove' can leave doubled spaces — normalize the ones we created
     if cfg.replacement == "remove":
         out = re.sub(r"[ \t]{2,}", " ", out)

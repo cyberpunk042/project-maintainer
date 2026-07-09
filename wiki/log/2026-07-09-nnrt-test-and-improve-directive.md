@@ -60,3 +60,34 @@ Result: trailing-ws findings **28 → 10** (all 10 now genuine prose drift, e.g.
 **Not applied.** No mutation run against NNRT — `clean --apply` awaits operator
 "when appropriate" call. Preview available via
 `bin/pm clean --project nnrt --fixers trailing-ws --diff`.
+
+## Cycle 2 — code-aware checks (2026-07-09)
+
+Ran `bin/pm report` across the whole registry (also exercised the report verb —
+works, all 6 targets local). The sweep surfaced the SAME root cause as cycle 1
+in two more checks: **code content was being scanned as prose.**
+
+- **broken-link** flagged markdown links written inside code as if navigable —
+  e.g. `` `[filename.md](path/to/file.md)` `` in second-brain's
+  session-handoff-standards / model-wiki-design (docs that *teach* link syntax).
+  7 of second-brain's 133 broken-link findings were such code examples.
+- **language (vulgar/slur)** flagged tokens that live only as data literals —
+  NNRT's lone `bastard` hit was inside a ```python``` dictionary
+  (`terms = [..., "bastard", ...]`), not prose.
+
+Fix: added `mask_code(text)` (`tools/audit.py`) — blanks fenced code blocks +
+inline code spans, length-preserving. `audit` now runs broken-link / cross-repo
+/ slur / vulgar over the masked text. Made `redact_text` (`tools/language.py`)
+code-aware to match, so the `clean` profanity fixer would never corrupt a code
+sample — `flag` and `clean` agree on what counts as prose. Structural checks
+(conflict, frontmatter, trailing-ws) still run on raw text (trailing-ws has its
+own fence-aware path from cycle 1). +4 regression tests (audit link-in-code,
+audit language-in-code, redact fenced, redact inline).
+
+Result: NNRT vulgar 1→0 (10 findings, all genuine prose drift); second-brain
+broken-link 133→126 (report total 183→176). Genuine broken links + prose
+profanity still flagged (tested). `selfcheck`: **67 tests pass**.
+
+The remaining 126 second-brain broken-links are genuine (repo-root-relative
+links written as file-relative, links into `.claude/` / sibling repos) — but
+second-brain is READ-ONLY from here; we surface, its own session fixes them.

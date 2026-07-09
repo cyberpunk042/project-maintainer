@@ -79,6 +79,37 @@ class TestAuditFixture(unittest.TestCase):
             fm = _checks(self._audit(root), "frontmatter")
             self.assertEqual([f.path for f in fm], ["wiki/concepts/page.md"])
 
+    def test_link_inside_code_not_broken(self):
+        # a markdown link written INSIDE a code fence or inline code span is a
+        # syntax example, not a navigable link — it must not be flagged broken.
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _mk(root, "wiki/a.md",
+                "---\nt: x\n---\n"
+                "Real broken: [x](./missing.md)\n"          # 1 genuine
+                "Inline example: `[y](path/to/file.md)`\n"  # not a link
+                "```\n[z](also/missing.md)\n```\n")          # not a link
+            broken = _checks(self._audit(root), "broken-link")
+            self.assertEqual([f.detail for f in broken], ["-> ./missing.md"])
+
+    def test_language_inside_code_not_flagged(self):
+        # a profanity token that appears only as a data literal inside a code
+        # fence is not prose — flag-only audit must not surface it.
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            entry = Project(name="fx", path=str(root), docs=["wiki"], wiki="wiki",
+                            language_policy="flag-only")
+            _mk(root, "wiki/dict.md",
+                "---\nt: x\n---\n"
+                "Clean prose line.\n"
+                '```python\nterms = ["fucking", "bastard"]\n```\n')
+            findings = audit_target(root, entry, siblings=set())
+            self.assertEqual(_checks(findings, "vulgar"), [])
+            # but the SAME token in prose IS flagged
+            _mk(root, "wiki/prose.md", "---\nt: x\n---\nyou fucking wrote that\n")
+            findings2 = audit_target(root, entry, siblings=set())
+            self.assertEqual(len(_checks(findings2, "vulgar")), 1)
+
     def test_junk_and_conflict(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

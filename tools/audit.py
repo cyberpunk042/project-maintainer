@@ -81,6 +81,39 @@ def has_cleanable_trailing_ws(text: str) -> bool:
     return clean_trailing_ws(text) != text
 
 
+_INLINE_CODE_RE = re.compile(r"(`+)(?:(?!\1).)*\1")
+
+
+def mask_code(text: str) -> str:
+    """Return `text` with fenced code blocks and inline code spans blanked out,
+    preserving line count + length so downstream line/offset logic stays valid.
+
+    A markdown link, a slur, or a profanity token that appears INSIDE code is a
+    syntax example / data literal / dictionary entry — NOT a navigable link or a
+    prose word. Checks that scan meaning (broken-link, cross-repo, slur, vulgar)
+    should run over the masked text so code samples don't produce false findings.
+    Structural checks (conflict markers, frontmatter, trailing-ws) run on the raw
+    text — trailing-ws has its own fence-aware handling in clean_trailing_ws."""
+    out: list[str] = []
+    in_fence = False
+    for line in text.splitlines(keepends=True):
+        nl = ""
+        if line.endswith("\r\n"):
+            body, nl = line[:-2], "\r\n"
+        elif line.endswith(("\n", "\r")):
+            body, nl = line[:-1], line[-1]
+        else:
+            body = line
+        if FENCE_RE.match(body):
+            in_fence = not in_fence
+            out.append(" " * len(body) + nl)        # blank the fence delimiter too
+        elif in_fence:
+            out.append(" " * len(body) + nl)        # fenced code content
+        else:
+            out.append(_INLINE_CODE_RE.sub(lambda m: " " * len(m.group()), body) + nl)
+    return "".join(out)
+
+
 JUNK_NAMES = {".DS_Store", "Thumbs.db", "desktop.ini"}
 JUNK_SUFFIXES = (".orig", ".rej", ".swp", ".swo", "~")
 SKIP_DIRS = {".git", "node_modules", "target", ".venv", "venv", "__pycache__", "dist", "build", ".pm"}
@@ -206,8 +239,11 @@ def audit_target(target: Path, entry: Project | None, checks: set[str] | None = 
             if enabled("empty") and not text.strip():
                 findings.append(Finding("empty", rel))
                 continue
+            # Links / language tokens inside code are examples or data literals,
+            # not navigable links or prose words — scan the code-masked text.
+            prose = mask_code(text)
             if enabled("broken-link") or cross_repo_on:
-                for m in LINK_RE.finditer(text):
+                for m in LINK_RE.finditer(prose):
                     href = m.group(1)
                     if "://" in href or href.startswith(("mailto:", "/", "<")):
                         continue
@@ -228,7 +264,7 @@ def audit_target(target: Path, entry: Project | None, checks: set[str] | None = 
             if lang_cfg and f.name != "language.yaml":
                 for tier in ("slur", "vulgar"):
                     if tier in lang_tiers and enabled(tier):
-                        hits = scan(text, lang_cfg, {tier})
+                        hits = scan(prose, lang_cfg, {tier})
                         if hits:
                             sample = sorted({m.word.lower() for m in hits})[:5]
                             findings.append(Finding(
