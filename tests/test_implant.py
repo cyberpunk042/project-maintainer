@@ -70,6 +70,30 @@ class TestImplantFunctional(unittest.TestCase):
             self.assertEqual((root / "CLAUDE.md").read_text(), "locally edited\n")
 
 
+class TestStructureAdvisory(unittest.TestCase):
+    def test_warns_on_preexisting_root_backlog(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _repo(root)
+            (root / "backlog").mkdir()
+            (root / "backlog" / "INDEX.md").write_text("x", encoding="utf-8")
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                implant.main(["--target", str(root)])       # dry-run
+            out = buf.getvalue()
+            self.assertIn("ADVISORY", out)
+            self.assertIn("root 'backlog/'", out)
+
+    def test_no_advisory_when_wiki_already_present(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            _repo(root)
+            (root / "backlog").mkdir()
+            (root / "backlog" / "INDEX.md").write_text("x", encoding="utf-8")
+            (root / "wiki").mkdir()                          # already wiki-organised
+            self.assertEqual(implant.structure_advisories(root), [])
+
+
 class TestProposeIdempotency(unittest.TestCase):
     """The .proposed conflict path must be idempotent AND never clobber an
     operator's in-progress .proposed (routing contract + Hard Rule 8)."""

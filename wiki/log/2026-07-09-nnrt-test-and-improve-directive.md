@@ -124,3 +124,36 @@ scaffold conflict idempotency). `selfcheck`: **70 tests pass**.
 
 All four thin verbs now honour the full mutating-verb contract (dry-run default,
 dirty-refusal, writable gating, additive `.proposed`, idempotency) end-to-end.
+
+## Cycle 4 — M003 manifest review (dry-run implant on real brainless targets)
+
+Reviewed the implant manifest against the two genuinely-brainless registered
+targets, sovereign-os and selfdef (both Rust; `brain: none`). Dry-run only.
+
+Manifest is sound: no AGENTS/CLAUDE conflict on either (clean stamps),
+`{{PROJECT}}` substitution correct, the rendered CLAUDE.md/AGENTS.md are generic
+ADAPT-marked scaffolds (TODO placeholders, no fabricated identity), and every
+internal link (`AGENTS.md`, `.claude/rules/work-mode.md`, `wiki/backlog/`,
+`wiki/log/`) resolves to something the same implant creates.
+
+**Finding — layout mismatch.** Both targets already keep a populated root
+`backlog/` (INDEX.md, SHIPPED.md, epics/) and have NO `wiki/`. The manifest
+hardcodes the second-brain greenfield layout (`wiki/backlog/`, `wiki/log/`), so
+implanting would create a `wiki/backlog/` PARALLEL to the existing `backlog/` —
+duplication, not integration.
+
+Tool improvement (safe, additive — no manifest change): `implant` now emits a
+`structure_advisories()` NOTE when the target has no `wiki/` but does have a
+root dir whose leaf collides with a wiki subtree we stamp (`backlog`, `log`).
+The dry-run now says, on both targets: *"target already has a root 'backlog/' —
+implant would create 'wiki/backlog/' ALONGSIDE it ... Decide: migrate 'backlog/'
+into wiki/, or adapt the manifest."* Silent on wiki-organised targets. +2 tests
+(72 total).
+
+**Operator-pending decision (does NOT block anything — no implant is imminent):**
+before any `implant --apply` on sovereign-os / selfdef, choose the backlog
+layout: (a) point the brain at the existing root `backlog/` (adapt the manifest
++ templates to `backlog/` instead of `wiki/backlog/`); (b) author a migration
+that moves `backlog/` under `wiki/`; or (c) accept `wiki/backlog/` as the
+canonical brain backlog and leave the legacy `backlog/` as-is. Manifest / new
+migration changes need operator approval (work-mode) — surfaced, not chosen.

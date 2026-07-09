@@ -30,6 +30,7 @@
 ## Operator-pending decisions
 
 - Per-target language cleanup is opt-in by design — each "clean the language in X" is an operator "when appropriate" call. No standing decision pending.
+- **Backlog layout before any `implant --apply` on sovereign-os / selfdef** (surfaced 2026-07-09 cycle 4; `implant` now warns via `structure_advisories`). Both targets have a populated root `backlog/` and no `wiki/`; the manifest would create a parallel `wiki/backlog/`. Choose: (a) adapt manifest+templates to the existing `backlog/`; (b) migrate `backlog/` under `wiki/`; (c) accept `wiki/backlog/` as canonical, leave legacy `backlog/`. Manifest/migration changes need operator approval. Not blocking — no implant is imminent.
 
 ## Registry snapshot
 
@@ -41,4 +42,5 @@ Targets in [projects.yaml](projects.yaml): sovereign-os (`flag-only`), selfdef (
   - *Cycle 1:* trailing-ws cleaner made fenced-code aware — prose cleaned hard-break-safe, fenced code left byte-exact. NNRT trailing-ws 28→10.
   - *Cycle 2:* added `mask_code()`; broken-link / cross-repo / slur / vulgar now scan code-masked text, and `redact_text` is code-aware to match. NNRT vulgar 1→0; second-brain broken-link 133→126 (code-example false positives). Genuine findings still surfaced.
   - *Cycle 3:* drove `implant`/`upgrade`/`scaffold`/`migrate` on a fixture. Found + fixed a contract bug: the `.proposed` conflict path was not idempotent and could overwrite an operator's in-progress merge. Shared `propose()` helper in `_mutate.py`: additive, idempotent, never clobbers. All four thin verbs now honour the full mutating-verb contract end-to-end.
-  - `selfcheck`: **70 tests pass**. No mutation applied to any real target — cleanup awaits operator go.
+  - *Cycle 4:* M003 manifest review — dry-run `implant` on real brainless targets (sovereign-os, selfdef). Manifest sound; found a layout mismatch (both have a root `backlog/`, no `wiki/`). Added `structure_advisories()` so implant warns about parallel-`wiki/backlog/` duplication instead of creating it silently. Surfaced the backlog-layout choice as an operator-pending decision (above).
+  - `selfcheck`: **72 tests pass**. No mutation applied to any real target — cleanup + implant await operator go.
