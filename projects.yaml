@@ -27,7 +27,9 @@ projects:
     brain: none
     writable: true
     language_policy: flag-only
-    notes: "Rust workspace; docs/ has sdd, handoff, review, standing-directives"
+    backlog_root: backlog
+    log_root: docs/standing-directives
+    notes: "Rust workspace; docs/ has sdd, handoff, review, standing-directives. Already has a MATURE root backlog/ (epics/modules/features/milestones/requirements) + verbatim operator mandates in docs/standing-directives/ — brain must point at THOSE, not create wiki/backlog. Adoption guide: backlog/log paths are per-project."
 
   selfdef:
     path: ~/selfdef
@@ -37,7 +39,9 @@ projects:
     brain: none
     writable: true
     language_policy: flag-only
-    notes: "Rust + eBPF; docs/ has sdd, handoff, review, operator"
+    backlog_root: backlog
+    log_root: docs/operator
+    notes: "Rust + eBPF; docs/ has sdd, handoff, review, operator. Already has a root backlog/ (INDEX/SHIPPED/milestones) + date-prefixed operator directives in docs/operator/ — brain points at THOSE, not wiki/backlog. Adoption guide: backlog/log paths are per-project."
 
   root-ghostproxy:
     path: ~/root-ghostproxy

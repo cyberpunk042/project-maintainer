@@ -157,3 +157,49 @@ layout: (a) point the brain at the existing root `backlog/` (adapt the manifest
 that moves `backlog/` under `wiki/`; or (c) accept `wiki/backlog/` as the
 canonical brain backlog and leave the legacy `backlog/` as-is. Manifest / new
 migration changes need operator approval (work-mode) — surfaced, not chosen.
+
+## Cycle 5 — resolving that decision by reasoning to the real answer
+
+Operator: *"you need to think by yourself and find out what is the real right
+answer"* — i.e. stop offering a menu; determine it. Did so from the CANONICAL
+adoption guide (`devops-solutions-information-hub/wiki/spine/references/adoption-guide.md`),
+which is explicit: *"Backlog paths — if your backlog lives at a different path,
+update all references"* and *"Change `wiki/log/` to wherever your project stores
+operator directives ... (or your equivalent path)"*. **Only the epic>module>task
+hierarchy + frontmatter state machines are sacrosanct; the `wiki/` prefix is
+not.**
+
+So all three options I'd offered were subtly wrong — (b) migrate and (c) parallel
+both FORCE a layout the standard leaves free, and (a) framed adaptation as a
+per-run chore. The real defect was in THIS tool: `implant`/`upgrade`/`scaffold`
+hardcoded `wiki/backlog/` + `wiki/log/`, making project-maintainer *stricter
+than the standard it exists to enforce*.
+
+Evidence that clinched it: sovereign-os already has a mature root `backlog/`
+(`epics/ modules/ features/ milestones/ requirements/`) and keeps verbatim
+operator mandates in `docs/standing-directives/`; selfdef has a root `backlog/`
+and date-prefixed directives in `docs/operator/`. Forcing `wiki/` would drop an
+EMPTY backlog beside a populated one and a `wiki/log/` beside the real directive
+store.
+
+Fix (the answer, implemented): made the implant layout **registry-driven**.
+- `projects.yaml` gains `backlog_root` / `log_root` (empty → ecosystem default
+  `wiki/backlog` / `wiki/log`, so wiki projects are unchanged).
+- Templates use `{{BACKLOG}}` / `{{LOG}}` placeholders (substituted like
+  `{{PROJECT}}`); `implant`/`upgrade`/`scaffold` derive dirs, manifest
+  destinations, and stamped content from the target's roots.
+- Set sovereign-os → `backlog` + `docs/standing-directives`; selfdef →
+  `backlog` + `docs/operator`.
+- `structure_advisories` reworked (cycle-4 → cycle-5): now warns only when the
+  *configured* path would create a fresh tree while a populated same-leaf dir
+  exists elsewhere — i.e. "you haven't told the registry about this layout".
+  Silent once the roots are set correctly.
+
+Verified: dry-run implant on sovereign-os / selfdef now stamps into their real
+`backlog/` + directive dirs, creates NOTHING under `wiki/`, advisory silent;
+rendered CLAUDE.md points at `backlog/` + `docs/standing-directives/`. Default
+`wiki/` layout preserved for wiki projects (tested). `selfcheck`: **74 tests
+pass**. No mutation applied to any real target.
+
+**Decision RESOLVED** — the layout is per-project by the standard; the tool now
+honours it. No operator menu needed.

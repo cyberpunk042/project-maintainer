@@ -17,7 +17,7 @@
 
 ## PO approval boundary
 
-**Safe unilateral work:** reading anything; running read-only tools; drafting in `wiki/log/` and scratch locations; mechanical fixes requiring no judgment.
+**Safe unilateral work:** reading anything; running read-only tools; drafting in `{{LOG}}/` and scratch locations; mechanical fixes requiring no judgment.
 
 **Needs operator approval:** changes to CLAUDE.md / AGENTS.md / root docs; schema or config policy changes; git operations that could lose work; restructuring directories.
 

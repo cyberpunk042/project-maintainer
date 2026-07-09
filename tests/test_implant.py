@@ -70,8 +70,16 @@ class TestImplantFunctional(unittest.TestCase):
             self.assertEqual((root / "CLAUDE.md").read_text(), "locally edited\n")
 
 
+class _Entry:
+    """Minimal stand-in for a registry Project (only the fields implant reads)."""
+    def __init__(self, name="fx", backlog_root="", log_root=""):
+        self.name, self.backlog_root, self.log_root = name, backlog_root, log_root
+
+
 class TestStructureAdvisory(unittest.TestCase):
-    def test_warns_on_preexisting_root_backlog(self):
+    def test_warns_when_default_path_would_duplicate_root_backlog(self):
+        # no backlog_root configured -> default wiki/backlog would be created
+        # alongside the target's populated root backlog/.
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
             _repo(root)
@@ -79,19 +87,51 @@ class TestStructureAdvisory(unittest.TestCase):
             (root / "backlog" / "INDEX.md").write_text("x", encoding="utf-8")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                implant.main(["--target", str(root)])       # dry-run
+                implant.main(["--target", str(root)])       # dry-run, no entry
             out = buf.getvalue()
             self.assertIn("ADVISORY", out)
-            self.assertIn("root 'backlog/'", out)
+            self.assertIn("'wiki/backlog/' does not exist", out)
+            self.assertIn("backlog_root", out)
 
-    def test_no_advisory_when_wiki_already_present(self):
+    def test_no_advisory_when_backlog_root_points_at_existing(self):
+        # once the registry declares backlog_root: backlog, the existing dir is
+        # reused and there is nothing to duplicate.
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "backlog").mkdir()
+            (root / "backlog" / "INDEX.md").write_text("x", encoding="utf-8")
+            entry = _Entry(backlog_root="backlog", log_root="docs/log")
+            (root / "docs" / "log").mkdir(parents=True)
+            self.assertEqual(implant.structure_advisories(entry, root), [])
+
+
+class TestLayoutAware(unittest.TestCase):
+    def test_implant_uses_configured_backlog_and_log_roots(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
             _repo(root)
-            (root / "backlog").mkdir()
-            (root / "backlog" / "INDEX.md").write_text("x", encoding="utf-8")
-            (root / "wiki").mkdir()                          # already wiki-organised
-            self.assertEqual(implant.structure_advisories(root), [])
+            entry = _Entry(name="rusty", backlog_root="backlog", log_root="docs/directives")
+            dirs = implant.build_dirs(entry)
+            self.assertIn("docs/directives", dirs)
+            self.assertIn("backlog/epics", dirs)
+            self.assertNotIn("wiki/log", dirs)
+            # stamped content points at the real paths, not wiki/*
+            man = implant.build_manifest(entry)
+            self.assertEqual(man["backlog/task.md"], "backlog/tasks/_template.md")
+            claude = implant.substitute(
+                (implant.TEMPLATES_DIR / "brain/CLAUDE.project.md").read_text(), "rusty", entry
+            )
+            self.assertIn("backlog/", claude)
+            self.assertIn("docs/directives/", claude)
+            self.assertNotIn("wiki/backlog", claude)
+            self.assertNotIn("wiki/log", claude)
+
+    def test_default_layout_unchanged_for_wiki_projects(self):
+        # a target with no path config keeps the ecosystem default wiki/ layout.
+        self.assertEqual(implant.backlog_root(None), "wiki/backlog")
+        self.assertEqual(implant.log_root(None), "wiki/log")
+        self.assertEqual(implant.build_manifest(None)["backlog/epic.md"],
+                         "wiki/backlog/epics/_template.md")
 
 
 class TestProposeIdempotency(unittest.TestCase):
