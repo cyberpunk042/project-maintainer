@@ -203,3 +203,47 @@ pass**. No mutation applied to any real target.
 
 **Decision RESOLVED** — the layout is per-project by the standard; the tool now
 honours it. No operator menu needed.
+
+## Cycle 6 — first real deliverable, and the CI-blindness gap it exposed
+
+Applied the NNRT trailing-ws cleanup for real (operator: *"ready"*):
+`clean --apply` on 10 docs files, +22/−22, verified whitespace-only (0 content
+change), NNRT re-audits clean. Pushed to NNRT's branch → **NNRT PR #15** (draft).
+
+**NNRT CI went red.** Investigated: the failing step is `ruff check nnrt/ tests/`
+reporting **6422 pre-existing errors** in NNRT's own `.py` files (E501, W291,
+…) — nothing to do with the docs-only change (ruff doesn't lint markdown). CI
+was already red before the PR.
+
+Operator: *"it should have detected the CI is will fail, we need to improve
+project-maintainer."* Correct — project-maintainer mutated + pushed + opened a PR
+**blind to the target's build/gate health**. A tool that opens PRs should know
+the target's CI baseline so a red check reads as pre-existing target debt, not an
+after-the-fact surprise.
+
+Fix — new read-only verb **`pm doctor`** (`tools/doctor.py`):
+- detects `.github/workflows/*.yml`, extracts the check commands the CI runs
+  (inline + block `run:` steps, split on `&&`/`;`);
+- classifies each: static linter / type-check / format / test / modify / skip;
+- runs the SAFE, STATIC ones locally (ruff/flake8/mypy/black --check/cargo
+  clippy/…) — they parse code, don't execute or modify it; test suites +
+  format-in-place are detected but NOT run (`--tests` opts in);
+- reports GREEN / RED / UNKNOWN with the failing command + summary.
+
+Plus a **fast pre-flight** wired into the mutation guard (`_mutate.guard`): every
+`--apply` runs `doctor.preflight_advisory` (sub-second linters only — ruff /
+flake8 / black --check; never mypy/cargo/pytest) and prints `CI PRE-FLIGHT:
+target CI baseline is RED …` when the target's CI is already failing. Advisory
+only — never blocks or crashes a mutation.
+
+Verified: `pm doctor --project nnrt` → `[FAIL] ruff check nnrt/ tests/ — 6422
+error(s)` → BASELINE RED; `clean --apply` on nnrt now prints the RED pre-flight
+warning before touching anything. +16 tests (`test_doctor.py`: classify /
+extract / derive_status hermetic + real-ruff red/green when ruff present).
+`selfcheck`: **90 tests pass**.
+
+**NNRT PR #15 status:** the docs change is correct + whitespace-only; the red CI
+is NNRT's own pre-existing ruff debt (out of scope for a docs-cleanup PR, and
+outside project-maintainer's current reach — `clean` maintains markdown, not
+Python lint). Operator's call whether to merge #15 (docs-only, red is
+pre-existing) or leave it until NNRT's lint debt is addressed separately.

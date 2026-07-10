@@ -37,6 +37,7 @@ existing populated tree.
 | "upgrade" / "re-sync the brain" | `pm upgrade` | Diff canonical templates vs target; additive merge or `.proposed` |
 | "migrate" / restructure | `pm migrate --list` then `pm migrate --id NNNN` | Versioned; state recorded in target at `.pm/migrations.applied` |
 | "scaffold a <type> in X" | `pm scaffold <type>` | Stamps a single template |
+| "is X's CI green" / "will the PR be red" / pre-PR check | `pm doctor` | Read-only. Detects the target's CI workflow(s), extracts the check commands, and runs the SAFE STATIC ones locally (linters / type-checkers / format --check) → GREEN/RED/UNKNOWN. Test suites + format-in-place are detected but not run (`--tests` to run tests). Every mutating `--apply` also runs a fast (sub-second linters only) pre-flight via `doctor.preflight_advisory` and warns when the target's CI is ALREADY red — so a red PR check reads as pre-existing target debt, not a surprise from our change. |
 | "report" / "health of everything" | `pm report` | audit across registry, consolidated output |
 | "registry" / "what targets" | `pm registry list` | |
 | "log <directive>" | Write `wiki/log/YYYY-MM-DD-<slug>.md` | BEFORE acting |

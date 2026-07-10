@@ -10,6 +10,7 @@ Verbs (the name is the spec — maintain, clean, level-up):
   upgrade    re-sync implanted target with templates     [scaffold]
   migrate    versioned idempotent migrations             [scaffold]
   scaffold   stamp a single template into a target       [scaffold]
+  doctor     target CI/health baseline (green/red/unknown) [working]
   selfcheck  sanity-check this repo itself               [working]
 """
 from __future__ import annotations
@@ -77,6 +78,7 @@ VERBS = {
     "upgrade": "tools.upgrade",
     "migrate": "tools.migrate",
     "scaffold": "tools.scaffold",
+    "doctor": "tools.doctor",
 }
 
 
