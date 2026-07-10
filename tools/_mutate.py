@@ -63,6 +63,16 @@ def guard(target: Path, entry: Project | None, apply: bool, allow_dirty: bool,
         )
     if allow_dirty:
         print(f"NOTE: --allow-dirty on {target} (operator-visible per Hard Rule 4)")
+    # CI pre-flight: a real change is about to land (and likely become a PR). If
+    # the target's CI is ALREADY red, say so now, so a red check on the eventual
+    # PR reads as pre-existing target debt, not a surprise from this change.
+    # Static checks only (fast); silent on green / no-CI / unverifiable.
+    try:
+        from tools.doctor import preflight_advisory
+        for note in preflight_advisory(target):
+            print(f"CI PRE-FLIGHT: {note}")
+    except Exception:
+        pass  # doctor is advisory — never let it block or crash a mutation
 
 
 def propose(report: "ChangeReport", target: Path, dst: Path, content: str, apply: bool,

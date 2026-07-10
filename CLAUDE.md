@@ -46,6 +46,7 @@ Full log: [wiki/log/](wiki/log/) (verbatim, sacrosanct). Log new directives ther
 | "implant the brain into X" / "wiki-hub implantation" | `bin/pm implant --project <name> --dry-run` |
 | "upgrade X's brain" | `bin/pm upgrade --project <name> --dry-run` |
 | "migrate X" / restructure docs/wiki | `bin/pm migrate --project <name> --list` then run specific migration |
+| "is X's CI green" / "will a PR be red" / before opening a PR into a target | `bin/pm doctor --project <name>` — detects the target's CI check commands and runs the safe/static ones locally (green/red/unknown). Every mutating `--apply` also runs a fast pre-flight and warns if the target's CI is ALREADY red. |
 | "report" / "health of everything" | `bin/pm report` |
 | "add project X" / registry changes | Edit [projects.yaml](projects.yaml), then `bin/pm registry list` to verify |
 | "log <directive>" / verbatim quote | Write `wiki/log/YYYY-MM-DD-<slug>.md` BEFORE acting |
