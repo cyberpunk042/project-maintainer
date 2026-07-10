@@ -1,0 +1,2470 @@
+{
+  "projects": [
+    {
+      "target": "/home/user/sovereign-os",
+      "total": 5,
+      "counts": {
+        "trailing-ws": 5
+      },
+      "findings": [
+        {
+          "check": "trailing-ws",
+          "path": "docs/sdd/035-workload-mode-adoption-doctrine.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/src/verbatim-surface.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "backlog/milestones/M066-trinity-framework-genesis-pulse-weaver-auditor.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "backlog/milestones/M067-custom-kernel-build-pipeline-znver5-avx512.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "backlog/milestones/M068-zfs-storage-architecture.md",
+          "detail": ""
+        }
+      ],
+      "project": "sovereign-os"
+    },
+    {
+      "target": "/home/user/selfdef",
+      "total": 11,
+      "counts": {
+        "trailing-ws": 9,
+        "broken-link": 1,
+        "vulgar": 1
+      },
+      "findings": [
+        {
+          "check": "trailing-ws",
+          "path": "docs/review/phase-4/30-crate-audit.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/review/phase-4/40-module-audit.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/review/phase-4/50-integration-audit.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/review/phase-4/60-docs-audit.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/review/phase-5/30-crate-audit.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/review/phase-5/50-integration-audit.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/review/phase-5/60-docs-audit.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/sdd/032-ebpf-substrate-and-tetragon-policy-ledger.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/src/ops/api.md",
+          "detail": "-> ../crates/selfdef-core/src/envelope.rs"
+        },
+        {
+          "check": "vulgar",
+          "path": "backlog/README.md",
+          "detail": "1x [fucking] (policy=flag-only)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "backlog/milestones/MS033-policy-and-trace.md",
+          "detail": ""
+        }
+      ],
+      "project": "selfdef"
+    },
+    {
+      "target": "/home/user/root-ghostproxy",
+      "total": 9,
+      "counts": {
+        "broken-link": 5,
+        "slur": 4
+      },
+      "findings": [
+        {
+          "check": "broken-link",
+          "path": "wiki/backlog/tasks/_index.md",
+          "detail": "-> ../milestones/v0.2-ai-natural-task-management.md"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-05-env-var-vs-parameter-cli-anti-pattern.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-05-failure-freeze-loop-and-strong-loop-directive.md",
+          "detail": "4x [retard] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-05-07-110045-finish-smoothly-handoff.md",
+          "detail": "-> ../lessons/01_drafts/2026-05-07-frozen-loop-meta-vs-project-layer-drift.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-05-07-110045-finish-smoothly-handoff.md",
+          "detail": "-> ../lessons/01_drafts/2026-05-07-verification-mechanism-must-match-edit-type.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-05-07-110045-finish-smoothly-handoff.md",
+          "detail": "-> ../lessons/01_drafts/2026-05-07-substance-burst-then-meta-treadmill-loop-lifecycle.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-05-07-110045-finish-smoothly-handoff.md",
+          "detail": "-> ../patterns/01_drafts/three-layer-mitigation-for-agent-behavioral-bugs.md"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-082700-operator-stop-patching-use-methodology-and-second-brain-knowledge.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-084355-terminate-handoff-loop-killed-dead-weight-recurrence.md",
+          "detail": "6x [retard] (policy=preserve)"
+        }
+      ],
+      "project": "root-ghostproxy"
+    },
+    {
+      "target": "/home/user/the-virus-block-mc",
+      "total": 3,
+      "counts": {
+        "broken-link": 3
+      },
+      "findings": [
+        {
+          "check": "broken-link",
+          "path": "docs/help/DESIGN_PATTERNS.md",
+          "detail": "-> ../00_TODO_DIRECTIVES.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/help/DESIGN_PATTERNS.md",
+          "detail": "-> ../00_TODO_DIRECTIVES.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/help/DESIGN_PATTERNS.md",
+          "detail": "-> ../02_CLASS_DIAGRAM.md"
+        }
+      ],
+      "project": "the-virus-block-mc"
+    },
+    {
+      "target": "/home/user/devops-solutions-information-hub",
+      "total": 267,
+      "counts": {
+        "trailing-ws": 106,
+        "broken-link": 132,
+        "frontmatter": 1,
+        "slur": 28
+      },
+      "findings": [
+        {
+          "check": "trailing-ws",
+          "path": "wiki/backlog/milestones/second-brain-complete-system-v2-0.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/backlog/modules/post-anthropic-3-layer-m002-harness-level-integration-mcp-wiring-opencode-config.md",
+          "detail": "-> ../../../.mcp.json"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/comparisons/cross-domain-patterns.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/comparisons/rlm-qwen3-8b-vs-qwen3-6-27b-tier-0-long-context-candidate.md",
+          "detail": "-> ../../../devops-expert-local-ai/docs/SESSION-2026-04-24-HANDOFF.md"
+        },
+        {
+          "check": "frontmatter",
+          "path": "wiki/config/model-catalog/VERIFICATION-LOG.md",
+          "detail": "no YAML frontmatter"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/comparison.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/concept.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/decision.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/epic.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/evolution.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/learning-path.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/milestone.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/note.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/principle.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/source-synthesis.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/task.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/cross-domain/custom-tailored-senior-engineer-tier-model-group-with-recreated-intelligence-layer-research-synthesis.md",
+          "detail": "-> ../../sources/tools-integration/src-gpt-oss-architecture-shared-experts-distillation.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/domains/cross-domain/methodology-framework/readiness-vs-progress.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/cross-domain/secure-tamper-proof-model-on-shared-gpu-research-synthesis.md",
+          "detail": "-> ../../lessons/01_drafts/anti-vendor-lock-in-is-an-empirical-claim-when-every-stack-layer-has-paper-evitence.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/domains/tools-and-platforms/notebooklm-py-cli.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/01_drafts/agent-authored-content-must-be-flagged-vs-operator-canonical-the-fabrication-cure.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/01_drafts/agent-decision-vs-operator-decision-boundary-discrimination-pre-action-gate.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/lessons/01_drafts/conflation-detection-at-hook-layer-the-rename-strategy-generalized.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/01_drafts/documentation-as-substitute-for-discipline-the-meta-pattern.md",
+          "detail": "6x [retard] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/lessons/01_drafts/mcp-discipline-register-only-what-is-referenced-and-actually-used-not-pre-emptive.md",
+          "detail": "-> ../../../.claude/projects/-home-jfortin-devops-solutions-information-hub/memory/feedback_register_dont_research_when_operator_states_a_fact.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/lessons/01_drafts/quality-per-position-compounds-quantity-per-position-diminishes-convergent-pattern.md",
+          "detail": "-> ../../../.claude/projects/-home-jfortin-devops-solutions-information-hub/memory/feedback_do_not_undermine_operator_design_assertions.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/lessons/01_drafts/task-shape-vs-response-shape-calibration-the-thin-output-cure.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/01_drafts/task-shape-vs-response-shape-calibration-the-thin-output-cure.md",
+          "detail": "1x [retarded] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/lessons/02_synthesized/anti-vendor-lock-in-is-an-empirical-claim-when-every-stack-layer-has-paper-evidence.md",
+          "detail": "-> ../../sources/tools-integration/src-gpt-oss-architecture-shared-experts-distillation.md"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/03_validated/enforcement-compliance/verbal-acknowledgment-is-not-a-fix-bug-fix-requires-structural-artefact.md",
+          "detail": "3x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/03_validated/methodology-process/agent-bug-fix-flow-must-be-mechanical-log-analyze-identify-fix-verify-confirm.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/03_validated/methodology-process/self-reference-drift-wiki-must-practice-its-own-teachings.md",
+          "detail": "2x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/03_validated/methodology-process/sidetrack-detection-and-recovery-when-agent-loses-the-original-task.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/lessons/03_validated/methodology-quality/fake-blockers-vs-real-blockers-empirical-verification-required.md",
+          "detail": "4x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-04-09/models/2026-04-09-directive-models-are-not-documents.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-17/2026-04-17-session-summary.md",
+          "detail": "-> CONTEXT.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-22-lint-tooling-fixes-backlog-modules-index-gap-wiki-health.md",
+          "detail": "-> modules/"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-22-openrouter-k2-6-day-1-setup-procedure.md",
+          "detail": "-> tools/claude_openrouter.sh"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-22-openrouter-k2-6-day-1-setup-procedure.md",
+          "detail": "-> tools/claude_openrouter.sh"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/provider_check.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/config/provider-pricing-cache.json"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/spine/references/ai-infrastructure-decision-framework-2026.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/spine/references/ai-model-provider-harness-decision-matrix-2026.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/spine/references/local-training-playbook-2026.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/spine/references/provider-pricing-monitoring-operations-plan.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/sources/tools-integration/src-codex-cli-and-claude-code-plugin.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/sources/tools-integration/src-claude-code-harness-features.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/sources/tools-integration/src-opencode-harness-features.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/sources/tools-integration/src-agentic-coding-harness-landscape-2026.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/sources/tools-integration/src-inference-provider-landscape-2026.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/comparisons/model-ecosystem-vs-four-project-ecosystem.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/comparisons/mcp-vs-cli-decision-vs-lesson.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/comparisons/kimi-k2-6-access-paths-openrouter-ollama-cloud-local.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/provider_check.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/pipeline.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/validate.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/lint.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/common.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/mcp_server.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/evolve.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/gateway.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> tools/manifest.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/config/wiki-schema.yaml"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md",
+          "detail": "-> wiki/config/provider-pricing-cache.json"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-handoff-pickup-cold-forward.md",
+          "detail": "-> CLAUDE.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-handoff-pickup-cold-forward.md",
+          "detail": "-> AGENTS.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-handoff-pickup-cold-forward.md",
+          "detail": "-> CONTEXT.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> wiki/log/2026-04-24-top-layer-routing-refactor-claude-md-gap-analysis.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/routing.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/methodology.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/self-reference.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/learnings.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/work-mode.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/ingestion.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/hook-architecture.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/hooks/pre-webfetch-corpus-check.sh"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/hooks/pre-bash.sh"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/hooks/session-start.sh"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/hooks/post-compact.sh"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/settings.json"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> wiki/spine/models/agent-config/model-skills-commands-hooks.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> tools/gateway.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> CLAUDE.md.target.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> raw/notes/2026-04-24-operator-directives-session-verbatim.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> CLAUDE.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> AGENTS.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/self-reference.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> .claude/rules/learnings.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> wiki/spine/super-model/super-model.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "-> wiki/lessons/04_principles/hypothesis/"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/agent-config/model-claude-code.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/log/2026-04-25-session-handoff-end-state-with-failures.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/super-model/super-model.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/references/model-registry.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/config/methodology.yaml"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/config/wiki-schema.yaml"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/config/artifact-types.yaml"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/config/sister-projects.yaml"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/foundation/model-llm-wiki.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/foundation/model-wiki-design.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/agent-config/model-markdown-as-iac.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/agent-config/model-skills-commands-hooks.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/agent-config/model-claude-code.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/depth/model-context-engineering.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/quality/model-quality-failure-prevention.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/lessons/04_principles/hypothesis/infrastructure-over-instructions-for-process-enforcement.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/lessons/04_principles/hypothesis/structured-context-governs-agent-behavior-more-than-content.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/lessons/04_principles/hypothesis/right-process-for-right-context-the-goldilocks-imperative.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/lessons/04_principles/hypothesis/declarations-are-aspirational-until-infrastructure-verifies-them.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/standards/gateway-output-contract.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/standards/concept-page-standards.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/super-model/enforcement-hierarchy.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/backlog/epics/milestone-v2/e022-context-aware-gateway-orientation-and-routing.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/backlog/modules/e022-m002-gateway-orient-subcommand.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/backlog/modules/e022-m003-what-do-i-need-upgrade.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> tools/gateway.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> .claude/hooks/session-start.sh"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> .claude/hooks/post-compact.sh"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> .claude/settings.json"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> raw/notes/2026-04-24-operator-directives-session-verbatim.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> raw/notes/2026-04-25-operator-directive-continue-ingestions-plus-qwen3-6-27b.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/log/2026-04-23-session-handoff-ai-infrastructure-vision-and-tooling.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/log/2026-04-24-session-handoff-brain-refactor-rules-and-hooks.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/log/2026-04-24-top-layer-routing-refactor-claude-md-gap-analysis.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/log/2026-04-25-session-handoff-qwen3-6-27b-ingestion-batch.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/lessons/03_validated/methodology-process/the-agent-must-practice-what-it-documents.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/spine/models/agent-config/model-claude-code.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> CLAUDE.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> .claude/rules/learnings.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> .claude/settings.json"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "-> wiki/log/2026-04-25-session-handoff-end-state-with-failures.md"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-04-25-regather-systemic-bug-investigation-and-second-p4-instance.md",
+          "detail": "3x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-04-25-session-handoff-end-state-with-failures.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-04-27-final-session-end-handoff-day-arc-complete-mission-wiki-side-done.md",
+          "detail": "3x [retard] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-27-session-end-handoff-13-artifacts-rlm-thread-saturation.md",
+          "detail": "-> ../.claude/commands/ingest.md"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-04-27-session-end-handoff-13-artifacts-rlm-thread-saturation.md",
+          "detail": "3x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-04-27-session-handoff-rlm-thread-complete-evidence-chain-t-0-mission.md",
+          "detail": "3x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-04-28-session-handoff.md",
+          "detail": "1x [moron] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-04-28-session-log-post-anthropic-3-layer-stack-assembly-multica-adoption.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-05-handoff-to-root-session.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-05-05-orient-pair-adoption-decision.md",
+          "detail": "-> ../lessons/03_validated/context-engineering/broken-and-idle-*"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-120-piece-milestone-closing-arc-summary-post-compact-recovery-tier-framework-complete.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-150-piece-milestone-closing-arc-summary-50-fires-post-compact-substantive-density-validated.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-200-piece-milestone-closing-arc-summary-100-fires-post-compact-substantial-substrate.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-PRE-COMPACT-HANDOFF-MANUAL-imminent-compaction-state-snapshot.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-auto-compact-priority-backlog-decomposition-epic-4-modules-15-tasks-fire-97-pattern-application.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-auto-dream-definition-question-surfaced-formally-for-operator-empirical-resolution.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-backlog-decomposition-proposal-runtime-control-diagnostic-discipline-epic-modules-tasks.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-body-of-work-composite-metric-self-application-meta-validation.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-body-of-work-composite-metric-self-application-meta-validation.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-body-of-work-over-delivery-vs-loop-directive-stated-range-150-piece-vs-30-80-piece-baseline.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-body-of-work-topic-arc-navigation-index-136-pieces-organized-by-substantive-arc.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-cluster-coverage-completion-summary-all-16-clusters-per-instance-enumerated-65-percent-coverage.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-composite-compliance-metric-recomputation-v2-tier-weighted-per-fire-103-audit-method.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-comprehensive-implementation-plan-phase-1-hook-drafts-plus-pareto-priority-1-5-elevation.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-elevation-candidate-summary-12-pareto-pieces-with-specs-fires-161-174.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-final-summary-arc-narrative-67-fires-with-operator-verbatim-threading.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-final-summary-arc-post-compact-era-trajectory-fires-102-175-substantive-snapshot.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-109-tier-elevation-pathway-tier-elevation-candidate-pareto-priority-3-of-5.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-113-sister-project-propagation-tier-elevation-candidate-pareto-secondary.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-121-loop-clear-criteria-tier-elevation-candidate-pareto-secondary.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-137-foundational-triplet-solution-chain-tier-elevation-candidate-pareto-secondary.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-65-substitution-pattern-lesson-tier-elevation-candidate-pareto-priority-1-of-5.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-92-operator-empirical-signal-grammar-tier-elevation-candidate-pareto-secondary.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-92-signal-grammar-c-prefix-detector-spec-extension.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-98-mode-by-nature-tier-elevation-candidate-pareto-secondary.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fire-99-question-registry-tier-elevation-candidate-pareto-secondary.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-fires-93-94-c04-c02-per-instance-tier-elevation-candidates-pareto-priority-4-5-of-5.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-foundational-cluster-set-expansion-c04-c02-c09-post-fire-126-phase-1-effort-revision.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-foundational-triplet-solution-piece-chain-c04-c02-c09-phase-1-implementation-forward-anchor.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-loop-empirical-state-observation-40-plus-fires-post-compact-substantive-density-sustained.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c01-hallucinated-artifacts-sb-095-8-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c02-decision-territory-18-instances-verbatim-mapped.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c03-stage-gate-violations-13-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c04-input-discipline-15-instances-verbatim-mapped.md",
+          "detail": "3x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c05-minimization-sb-051-052-053-9-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c06-freeze-when-corrected-abdication-9-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c08-substitution-as-discipline-sb-128-meta-pattern-9-instances.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c09-status-claim-without-verification-p4-axis-12-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c09-status-claim-without-verification-p4-axis-12-instances-verbatim-mapped.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c10-post-fix-not-re-read-sb-112-7-instances.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c11-sub-agent-dispatch-no-retry-sb-049-6-instances.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c12-going-to-extremes-pendulum-12-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c13-evidence-priority-misordered-10-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c15-pattern-recurrence-16-instances-verbatim-mapped.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c18-cross-cutting-multi-cluster-intersections-15-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-per-instance-pain-point-evidence-c19-documentation-implementation-asymmetry-12-instances-verbatim-mapped.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-phase-1-hook-drafts-complete-5-concrete-implementations-summary-fires-154-158.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-post-200-substance-saturation-observation-incremental-territory-acknowledged.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-question-registry-instance-6-questions-from-auto-compact-priority-sequence-fires-102-109-formal-surface.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-ready-for-review-decision-package-refresh-v4-103-pieces-post-compact-recovery-tier-audit-integrated.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-ready-for-review-decision-package-refresh-v5-115-pieces-tier-weighted-compliance-framework-complete.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-ready-for-review-decision-package-refresh-v7-158-pieces-phase-1-hook-drafts-complete.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-sister-project-investigation-kickoff-spec-root-ghostproxy-foundational-triplet-adaptation.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-standardize-extension-proposal-wiki-schema-implementation-tier-frontmatter-field-for-body-piece-tracking.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-08-strategic-coverage-validation-180-pain-points-to-17-solution-pieces.md",
+          "detail": "2x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-sustained-feedback-loop-empirical-instance-this-session-post-compact-recovery-fire-90-application.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-tier-audit-cumulative-summary-7-batches-75-pieces-extrapolated-body-wide-projection.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-tier-audit-extension-batch-2-fires-105-119-10-additional-pieces-classified.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-worked-example-13-gate-pipeline-retrospective-on-c04-input-discipline-insight-5b.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-worked-example-13-gate-pipeline-retrospective-on-statusline-sb-093-cascade.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/log/2026-05-08-worked-example-4-post-compact-detection-failure-real-session-empirical-evidence-impl-spec-10-stress-test.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-05-16-strong-handoff-ck-v3-live-cr-ps-still-broken.md",
+          "detail": "-> wiki/log/2026-05-16-ck-bootstrap-execution-batch-1.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-05-16-strong-handoff-ck-v3-live-cr-ps-still-broken.md",
+          "detail": "-> isolated"
+        },
+        {
+          "check": "slur",
+          "path": "wiki/log/2026-05-16-strong-handoff-ck-v3-live-cr-ps-still-broken.md",
+          "detail": "2x [retard] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-06-06-perpetual-goal-resumed-three-repo-ci-green-out.md",
+          "detail": "-> url"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/13-gate-pipeline-composability-with-second-brain-5-tier-maturity-and-mcp-tool-layer.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/active-task-anchor-and-drift-detection-gate-design.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/patterns/01_drafts/active-task-anchor-and-drift-detection-gate-design.md",
+          "detail": "4x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/authorship-classification-gate-implementation-spec-frontmatter-taxonomy-enforcement.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/auto-compact-disable-implementation-spec-prevention-layer-for-impl-spec-10-defense-in-depth.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/blocker-and-impediment-registry-pattern-completes-mode-by-nature-governance-trio.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/bypass-discipline-operationalization-unified-reason-protocol-with-abuse-detection.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/c02-decision-territory-hook-python-draft-agent-authored-pre-tool-use-pattern-match-detection.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/c04-input-discipline-hook-python-draft-agent-authored-state-file-sentinel-pattern.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/c09-status-claim-hook-python-draft-agent-authored-pre-tool-use-pattern-match-detection.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/composite-operational-compliance-metric-implementation-spec-measurement-layer-aggregator.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/correction-shape-gate-implementation-spec-one-notch-vs-extreme-swing-detection.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/cron-loop-management-pattern-self-governance-and-forward-anchored-stop-conditions.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/documentation-implementation-asymmetry-pattern-4-tier-audit-distinguishes-design-from-enforcement.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/feature-flag-system-for-mode-conditional-context-injection-with-auto-manual-profile-management.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/foundational-cluster-prioritized-enforcement-layer-pattern-c04-c02-coverage-maximizes-cross-cutting-prevention.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/loop-clear-criteria-pattern-ready-for-review-stop-conditions-and-re-loop-triggers.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/operator-empirical-signal-grammar-pattern-recognition-discipline-routing-signals-to-body-actions.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "wiki/patterns/01_drafts/pattern-recurrence-quantification-and-operator-frustration-as-signal.md",
+          "detail": "2x [retard] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/post-compact-orientation-gate-implementation-spec-handoff-and-mirror-enforcement.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/post-compact-orientation-mirror-and-handoff-doc-completeness-gate.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/post-compact-pretooluse-blocker-hook-python-draft-agent-authored-tier-4-enforcement.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/post-compact-pretooluse-blocker-implementation-spec-tier-4-enforcement-for-impl-spec-10.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/pre-compact-handoff-hook-implementation-spec-for-opt-path-to-tier-4-for-impl-spec-10.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/pre-compact-handoff-hook-python-draft-agent-authored-deterministic-state-snapshot.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/sister-project-propagation-pattern-from-second-brain-to-5-project-ecosystem.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/sister-project-propagation-spec-for-auto-compact-triplet-5-projects-adaptation-matrix.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/01_drafts/tier-elevation-pathway-pattern-systematic-tier-1-to-tier-4-transitions-per-body-piece.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/patterns/02_synthesized/second-brain-observer-pattern-extracting-learnings-from-live-sister-project-sessions.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/sources/ai-models/src-anthropic-spacex-colossus-claude-code-limits-doubled-2026-05-06.md",
+          "detail": "-> ../sources/ai-models/"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/sources/tools-integration/src-browsecomp-plus-paper-deep-dive-fixed-corpus-table-1-oracle-citation-quality.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/sources/tools-integration/src-caveman-prompt-output-compressor-julius-brussee.md",
+          "detail": "-> ../../../../.claude/projects/-home-jfortin-devops-solutions-information-hub/memory/feedback_never_auto_swap_root_docs.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/sources/tools-integration/src-cloudflare-markdown-for-agents-content-negotiation-80-percent-token-reduction-2026-02.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/sources/tools-integration/src-cloudflare-x402-foundation-coinbase-pay-per-crawl-machine-payments-2025-09-23.md",
+          "detail": "-> ../../tools/mcp_server.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/sources/tools-integration/src-cloudflare-x402-foundation-coinbase-pay-per-crawl-machine-payments-2025-09-23.md",
+          "detail": "-> ../../../.claude/projects/.../memory/feedback_money_spending_clarity.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/sources/tools-integration/src-deepseek-v4-token-wise-compression-dsa-sparse-attention-1m-context-default-2026-04.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/sources/tools-integration/src-longbench-pro-paper-deep-dive-1500-samples-46-models-three-findings.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/sources/tools-integration/src-oolong-paper-deep-dive-synth-real-leaderboard-cmu-frontier-fails-128k.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/sources/tools-integration/src-philschmid-four-subagents-patterns-2026-inline-fanout-pool-teams.md",
+          "detail": "-> memory"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/sources/tools-integration/src-prime-intellect-verifiers-llm-rl-environments.md",
+          "detail": "-> ../../../.claude/projects/-home-jfortin-devops-solutions-information-hub/memory/feedback_mission_framing.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/sources/tools-integration/src-prime-intellect-verifiers-llm-rl-environments.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/sources/tools-integration/src-rlm-recursive-language-models-mit-oasys.md",
+          "detail": "-> ../../../../devops-expert-local-ai/docs/SESSION-2026-04-24-HANDOFF.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/sources/tools-integration/src-rlm-recursive-language-models-mit-oasys.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/learning-paths/custom-tailored-senior-engineer-tier-model-group-2026-05-04.md",
+          "detail": "-> ../../CLAUDE.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/learning-paths/custom-tailored-senior-engineer-tier-model-group-2026-05-04.md",
+          "detail": "-> ../../AGENTS.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/models/foundation/model-wiki-design.md",
+          "detail": "-> ./path"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/references/provider-pricing-monitoring-operations-plan.md",
+          "detail": "-> tools/provider_check.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/model-standards/model-llm-wiki-standards.md",
+          "detail": "-> wiki/config/templates/decision.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/model-standards/model-llm-wiki-standards.md",
+          "detail": "-> wiki/config/templates/pattern.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/model-standards/model-llm-wiki-standards.md",
+          "detail": "-> wiki/config/templates/operations-plan.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> path"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> docs/SESSION-2026-04-14-handoff.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> path/to/file.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> path"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> docs/SESSION-HANDOFF-TEMPLATE.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> docs/SESSION-2026-04-14-handoff.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> docs/SESSION-2026-04-10-final.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> docs/SESSION-2026-04-12-handoff.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/spine/standards/session-handoff-standards.md",
+          "detail": "-> docs/SESSION-2026-04-12-handoff-v2.md"
+        }
+      ],
+      "project": "second-brain"
+    },
+    {
+      "target": "/home/user/openarms",
+      "total": 22,
+      "counts": {
+        "broken-link": 18,
+        "trailing-ws": 2,
+        "frontmatter": 2
+      },
+      "findings": [
+        {
+          "check": "broken-link",
+          "path": "docs/concepts/markdown-formatting.md",
+          "detail": "-> url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/concepts/markdown-formatting.md",
+          "detail": "-> url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/concepts/markdown-formatting.md",
+          "detail": "-> url"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/start/showcase.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/channels/feishu.md",
+          "detail": "-> ../images/feishu-step2-create-app.png"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/channels/feishu.md",
+          "detail": "-> ../images/feishu-step3-credentials.png"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/channels/feishu.md",
+          "detail": "-> ../images/feishu-step4-permissions.png"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/channels/feishu.md",
+          "detail": "-> ../images/feishu-step5-bot-capability.png"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/channels/feishu.md",
+          "detail": "-> ../images/feishu-step6-event-subscription.png"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/channels/feishu.md",
+          "detail": "-> ../images/feishu-verification-token.png"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/concepts/markdown-formatting.md",
+          "detail": "-> url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/concepts/markdown-formatting.md",
+          "detail": "-> url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/zh-CN/concepts/markdown-formatting.md",
+          "detail": "-> url"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/zh-CN/start/showcase.md",
+          "detail": ""
+        },
+        {
+          "check": "frontmatter",
+          "path": "wiki/config/agent-directive-v1.md",
+          "detail": "no YAML frontmatter"
+        },
+        {
+          "check": "frontmatter",
+          "path": "wiki/config/pm-directive.md",
+          "detail": "no YAML frontmatter"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/architecture/hook-events-design.md",
+          "detail": "-> ../../backlog/epics/E007-extensibility-superpowers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/capabilities/extensibility.md",
+          "detail": "-> ../../backlog/epics/E007-extensibility-superpowers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/capabilities/extensibility.md",
+          "detail": "-> ../../backlog/epics/E002-network-rules.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/capabilities/privacy-anonymity.md",
+          "detail": "-> ../../backlog/epics/E002-network-rules.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/capabilities/privacy-anonymity.md",
+          "detail": "-> ../../backlog/epics/E007-extensibility-superpowers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-12-t088-run-critical-review.md",
+          "detail": "-> src/commands/agent-run.ts"
+        }
+      ],
+      "project": "openarms"
+    },
+    {
+      "target": "/home/user/openfleet",
+      "total": 122,
+      "counts": {
+        "broken-link": 82,
+        "trailing-ws": 34,
+        "slur": 6
+      },
+      "findings": [
+        {
+          "check": "broken-link",
+          "path": "docs/SESSION-2026-04-19.md",
+          "detail": "-> ../../.claude/projects/-home-jfortin-openfleet/memory/project_brain_validates_openfleet_architecture.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/SESSION-2026-04-19.md",
+          "detail": "-> ../wiki/../../../devops-solutions-research-wiki/wiki/patterns/01_drafts/observe-fix-verify-loop.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/SESSION-2026-04-19.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/decisions/01_drafts/pretooluse-hooks-layered-approach.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/knowledge-map/kb/systems/07-orchestrator.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/knowledge-map/kb/tools/fleet_gate_request.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/knowledge-map/kb/tools/fleet_plane_comment.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/knowledge-map/kb/tools/fleet_request_input.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/knowledge-map/module-manuals.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/active/agent-directory-cleanup.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "docs/milestones/active/fleet-elevation/20-ai-behavior.md",
+          "detail": "1x [retards] (policy=preserve)"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/active/fleet-master-diagrams.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/active/fleet-vision-architecture.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "docs/milestones/active/immune-system/01-overview.md",
+          "detail": "2x [retard, retards] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "docs/milestones/active/immune-system/03-disease-catalogue.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "docs/milestones/active/immune-system/05-detection.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/labor-attribution-and-provenance.md",
+          "detail": "-> url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/labor-attribution-and-provenance.md",
+          "detail": "-> task_url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/labor-attribution-and-provenance.md",
+          "detail": "-> compare_url"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/active/phase-a-operations-analysis.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/active/phase-c-group-call-architecture.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {commit_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {commit_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {commit_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {file_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {task_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {board_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {compare_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {fleet_repo_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {pr_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {compare_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {file_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {commit_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {task_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {task_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f1-foundation-skills.md",
+          "detail": "-> {task_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f4-governance-agent.md",
+          "detail": "-> {task_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f4-governance-agent.md",
+          "detail": "-> {task_url}"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/phase-f4-governance-agent.md",
+          "detail": "-> {pr_url}"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/active/role-specific-tooling-elevation-plan.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/core/methodology_config.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../config/methodology.yaml"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/core/preembed.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/core/preembed.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/cli/orchestrator.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/core/preembed.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/core/heartbeat_context.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/templates/comment.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/cli/orchestrator.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/core/navigator.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../docs/knowledge-map/injection-profiles.yaml"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/core/navigator.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/tests/core/test_methodology_models.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../fleet/tests/core/test_tier_renderer.py"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/domains/architecture/analysis-context-injection-blockers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/domains/architecture/investigation-context-injection-blockers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/domains/architecture/plan-context-injection-blockers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/domains/architecture/analysis-output-quality-blockers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/domains/architecture/investigation-output-quality-blockers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/domains/architecture/plan-output-quality-tk01.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/log/2026-04-11-directive-plan-types.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/log/2026-04-10-directive-multi-level-tasks.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../CLAUDE.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/domains/architecture/context-injection-tree.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/domains/architecture/analysis-output-quality-blockers.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../validation-matrix/TK-01-work-full-contrib.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/active/session-handoff-2026-04-16.md",
+          "detail": "-> ../../wiki/log/2026-04-10-directive-multi-level-tasks.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/active/standards/brain-modules-standard.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/active/tools-system-session-handoff.md",
+          "detail": ""
+        },
+        {
+          "check": "slur",
+          "path": "docs/milestones/archive/critical-bugs-and-missing-work.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "slur",
+          "path": "docs/milestones/archive/pre-relaunch-milestones.md",
+          "detail": "1x [retard] (policy=preserve)"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/design/design-surface-interactions.md",
+          "detail": "-> github_url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/design/design-surface-interactions.md",
+          "detail": "-> task_url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/design/design-surface-interactions.md",
+          "detail": "-> task_url"
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/milestones/design/design-surface-interactions.md",
+          "detail": "-> {task_url}"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/superpowers/specs/2026-04-05-brain-wiring-and-backend-execution.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "docs/superpowers/specs/2026-04-09-context-injection-tiered-rendering-design.md",
+          "detail": "-> ../../../../devops-expert-local-ai/CLAUDE.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/superpowers/specs/2026-04-09-context-injection-tiered-rendering-design.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/systems/15-challenge.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/systems/16-models.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/systems/22-agent-intelligence.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/comparison.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/concept.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/decision.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/epic.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/evolution.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/learning-path.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/milestone.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/note.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/principle.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/source-synthesis.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/config/templates/task.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/domains/architecture/context-strategy-design.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/architecture/doctor-rules-vs-agent-failure-taxonomy.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/patterns/03_validated/enforcement/three-lines-of-defense-immune-system-for-agent-quality.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/architecture/doctor-rules-vs-agent-failure-taxonomy.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/patterns/03_validated/enforcement/three-lines-of-defense-immune-system-for-agent-quality.md"
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/domains/architecture/generate-tools-md-redesign.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/domains/architecture/investigation-context-injection-blockers.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/domains/architecture/operational-modes-design.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "wiki/domains/architecture/plan-output-quality-tk01.md",
+          "detail": ""
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/architecture/shared-models-integration.md",
+          "detail": "-> ../../docs/superpowers/specs/2026-04-09-context-injection-tiered-rendering-design.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/integration-chain-mapping-2026-04-18.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/spine/models/agent-config/model-claude-code.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/integration-chain-mapping-2026-04-18.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/patterns/03_validated/enforcement/three-lines-of-defense-immune-system-for-agent-quality.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/integration-chain-mapping-2026-04-18.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/patterns/03_validated/architecture/plan-execute-review-cycle.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/integration-chain-mapping-2026-04-18.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/patterns/03_validated/architecture/deterministic-shell-llm-core.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/integration-chain-mapping-2026-04-18.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/spine/models/ecosystem/model-ecosystem.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/integration-chain-mapping-2026-04-18.md",
+          "detail": "-> ../../../../../.claude/projects/-home-jfortin-openfleet/memory/project_brain_validates_openfleet_architecture.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/integration-chain-mapping-2026-04-18.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/lessons/03_validated/context-engineering/context-compaction-is-a-reset-event.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/operational-depth-gaps.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/spine/models/agent-config/model-claude-code.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/operational-depth-gaps.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/patterns/03_validated/enforcement/three-lines-of-defense-immune-system-for-agent-quality.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/operational-depth-gaps.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/patterns/03_validated/architecture/plan-execute-review-cycle.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/operational-depth-gaps.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/patterns/03_validated/architecture/deterministic-shell-llm-core.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/operational-depth-gaps.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/spine/models/ecosystem/model-ecosystem.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/domains/planning/operational-depth-gaps.md",
+          "detail": "-> ../../../../devops-solutions-research-wiki/wiki/lessons/03_validated/enforcement-compliance/infrastructure-enforcement-proves-instructions-fail.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/lessons/03_validated/methodology-process/never-skip-stages-even-when-told-to-continue.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/spine/models/agent-config/model-claude-code.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/patterns/03_validated/enforcement/three-lines-of-defense-immune-system-for-agent-quality.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/patterns/03_validated/architecture/plan-execute-review-cycle.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/patterns/03_validated/architecture/deterministic-shell-llm-core.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/spine/models/ecosystem/model-ecosystem.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/lessons/03_validated/context-engineering/structured-context-is-proto-programming-for-ai-agents.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/lessons/03_validated/context-engineering/context-compaction-is-a-reset-event.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../devops-solutions-research-wiki/wiki/lessons/03_validated/enforcement-compliance/agent-failure-taxonomy-seven-classes-of-behavioral-failure.md"
+        },
+        {
+          "check": "broken-link",
+          "path": "wiki/log/2026-04-19-session-brain-integration.md",
+          "detail": "-> ../../../../.claude/projects/-home-jfortin-openfleet/memory/feedback_contribute_when_asked.md"
+        }
+      ],
+      "project": "openfleet"
+    },
+    {
+      "target": "/home/user/devops-control-plane",
+      "total": 1,
+      "counts": {
+        "trailing-ws": 1
+      },
+      "findings": [
+        {
+          "check": "trailing-ws",
+          "path": "docs/AUDIT_PLAN.md",
+          "detail": ""
+        }
+      ],
+      "project": "devops-control-plane"
+    },
+    {
+      "target": "/home/user/Narrative-to-Neutral-Report-Transformer",
+      "total": 29,
+      "counts": {
+        "trailing-ws": 28,
+        "vulgar": 1
+      },
+      "findings": [
+        {
+          "check": "trailing-ws",
+          "path": "docs/IR_SPEC_v0_1.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/analysis/architectural_gap_analysis_v4.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/analysis/comprehensive_pre_alpha_audit.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/analysis/infrastructure_gaps_v1.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/analysis/infrastructure_gaps_v3.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/architecture/MINIMAL_REFACTOR.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/architecture/REFACTORING_PROPOSAL.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/architecture/architecture_guide.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/architecture/policy_engine_redesign.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/decomposition_rules.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/diff_comparison_feature.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/logging_system.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/nnrt_quality_analysis.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/nnrt_v3_architecture.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/pass_logging_plan.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/v3_implementation_plan.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/v4_remediation_plan.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/design/v6_timeline_research.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/future/MultiOutputMode.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/road_to_pre_alpha.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/v5_blocking_issues.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/milestones/v6_verification_platform.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/research/decomposition_research.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/schema/gold_standard_example.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/specs/phase1_statement_classification.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/specs/phase2_structured_output.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/specs/phase3_4_uncertainty_entities.md",
+          "detail": ""
+        },
+        {
+          "check": "trailing-ws",
+          "path": "docs/specs/phase5_validation.md",
+          "detail": ""
+        },
+        {
+          "check": "vulgar",
+          "path": "docs/specs/phase5_validation.md",
+          "detail": "1x [bastard] (policy=flag-only)"
+        }
+      ],
+      "project": "narrative-to-neutral-report-transformer"
+    },
+    {
+      "target": "/home/user/warp-solar-system-shaders",
+      "total": 0,
+      "counts": {},
+      "findings": [],
+      "project": "warp-solar-system-shaders"
+    }
+  ],
+  "skipped": [],
+  "totals": {
+    "sovereign-os": 5,
+    "selfdef": 11,
+    "root-ghostproxy": 9,
+    "the-virus-block-mc": 3,
+    "second-brain": 267,
+    "openarms": 22,
+    "openfleet": 122,
+    "devops-control-plane": 1,
+    "narrative-to-neutral-report-transformer": 29,
+    "warp-solar-system-shaders": 0
+  }
+}
