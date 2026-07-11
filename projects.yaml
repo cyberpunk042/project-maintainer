@@ -82,3 +82,57 @@ projects:
     writable: false
     language_policy: preserve
     notes: "READ-ONLY from project-maintainer (AGENTS.md Hard Rule 6). Audit allowed; never mutate. Operator-verbatim corpus is sacrosanct; preserve vulgar, flag slurs only."
+
+  # --- Registered 2026-07-10 (Wave 0): the 5 live ecosystem repos previously invisible to the toolbelt. ---
+  # doc roots below are REAL (verified on disk), not invented. brain=none = pm never stamped ITS brain here;
+  # openarms/openfleet carry their OWN mature native brains — audit/upgrade territory, NOT implant.
+
+  openarms:
+    path: ~/openarms
+    remote: https://github.com/cyberpunk042/openarms
+    docs: [docs, wiki, README.md]
+    wiki: wiki
+    brain: none
+    writable: true
+    language_policy: preserve
+    notes: "TS agent platform (fork of OpenClaw). Carries its own native brain (CLAUDE.md + .claude/ + wiki) — do NOT implant over it; audit/upgrade only. Its logs quote the operator verbatim incl. strong language (sacrosanct) -> preserve vulgar, flag slurs only."
+
+  openfleet:
+    path: ~/openfleet
+    remote: https://github.com/cyberpunk042/openfleet
+    docs: [docs, wiki, README.md]
+    wiki: wiki
+    brain: none
+    writable: true
+    language_policy: preserve
+    notes: "Python fleet orchestrator + TS gateway. Own native brain (CLAUDE.md + .claude/ + wiki) — audit/upgrade, not implant. wiki/log carries operator-verbatim strong language (sacrosanct) -> preserve vulgar, flag slurs only. NOTE: its brain + tools/gateway.py + .mcp.json still reference the OLD repo name 'devops-solutions-research-wiki' (now 'devops-solutions-information-hub') across 43 files, all via /home/jfortin/ absolute paths — a repo-wide rename that needs operator confirmation of the real machine layout before any fix."
+
+  devops-control-plane:
+    path: ~/devops-control-plane
+    remote: https://github.com/cyberpunk042/devops-control-plane
+    docs: [docs, README.md, CHANGELOG.md]
+    wiki: ""
+    brain: none
+    writable: true
+    language_policy: flag-only
+    notes: "Flask DevOps admin dashboard (44 blueprints). `.agent/` is agent scratch (plans/docs) — deliberately EXCLUDED from docs roots (mirror the-virus-block-mc convention). Unknown-intent -> flag-only."
+
+  narrative-to-neutral-report-transformer:
+    path: ~/Narrative-to-Neutral-Report-Transformer
+    remote: https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer
+    docs: [docs, README.md, LLM_VS_NLP_POSITIONING.md]
+    wiki: ""
+    brain: none
+    writable: true
+    language_policy: flag-only
+    notes: "Python narrative->neutral-report NLP pipeline (v0.3). Dir is CamelCase on disk; github repo lower-cased. Unknown-intent -> flag-only."
+
+  warp-solar-system-shaders:
+    path: ~/warp-solar-system-shaders
+    remote: https://github.com/cyberpunk042/warp-solar-system-shaders
+    docs: [README.md]
+    wiki: ""
+    brain: none
+    writable: true
+    language_policy: flag-only
+    notes: "Greenfield GLSL shader repo — currently only a 1-line README. Intended standalone home for the 92-file shader library living inside the-virus-block-mc. Unknown-intent -> flag-only."
